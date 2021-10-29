@@ -9,30 +9,10 @@
   grid-template-rows: 60px 1fr 100px;                      
 }
 
-.header {
-grid-area: h;
-background-color: cyan;
-}
-
-.header img {
-  width: 60px;
-}
-
-.nav {
-  grid-area: n;
-  background-color: chartreuse;
-}
-
-.main {
+.app-wraper-content {
   grid-area: m;
-  background-color: bisque;
+    background-color: bisque;
 }
 
-.main img {
-  width: 300px;
-}
 
-.footer {
-grid-area: f;
-background-color: coral;
-}
+

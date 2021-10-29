@@ -1,0 +1,15 @@
+.items {
+  grid-area: n;
+  color: white;
+  background-color: chartreuse;
+  padding: 20px;
+  text-decoration: none;
+}
+
+.items a.activeLink {
+  color: gold;
+}
+
+a {
+  color: white;
+}

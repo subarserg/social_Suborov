@@ -1,30 +1,26 @@
 import React from "react";
+import { BrowserRouter,Route } from "react-router-dom";
 import "./App.css";
+import Dialog from "./components/Dialog/Dialog";
+import Footer from "./components/Footer/Footer";
+import Header from "./components/Header/Header";
+import NavBar from "./components/NavBar/NavBar";
+import Profile from "./components/Profile/Profile";
 
 const App = () => {
   return (
+    <BrowserRouter>
     <div className="app-wraper">
-      <header className="header">
-        <img src="https://img2.freepng.ru/20180701/oht/kisspng-fox-logo-graphic-design-art-fox-vector-5b3891a35deb36.5519866715304339553847.jpg"></img>
-      </header>
-      <nav className="nav">
-        <div>Profile</div>
-        <div>Message</div>
-        <div>News</div>
-        <div>Music</div>
-        <div>Settings</div>
-      </nav>
-      <main className="main">
-        <div>
-          <div>
-            <img src="https://www.vinterier.ru/pictures/shop/osen-v-moskve-kartina-maslom-60x50.jpg"></img>
-          </div>
-          <div>Ava+Discraption</div>
-          <div>New post</div>
-        </div>
-      </main>
-      <footer className="footer">Contacts</footer>
+      <Header />
+      <NavBar />
+      <div className="app-wraper-content">
+        <Route path='/profile' component={Profile}/>
+        <Route path='/dialog' component={Dialog}/>
+      </div>
+      <Footer />
     </div>
+    </BrowserRouter>
+    
   );
 };
 
