@@ -1,17 +1,31 @@
 import React from "react";
 import Post from "./Post/Post";
+import style from "./MyPost.module.css";
 
 const MyPost = () => {
-   return (
-       <div>
-           <div>New Post</div>
-           <textarea></textarea>
-           <button>Add Post</button>
-          <Post text= "Hi,world"  col= '5' />
-          <Post text= "How are you"  col= '7' />
-          <Post text= "Good night"  col= '8' />
-       </div>
-      )
-   }
 
-export default MyPost
+   let postData = [
+      {id : 1, text : 'Hi,world', likesCount: 5},
+      {id : 2, text : 'How are you', likesCount: 7},
+      {id : 3, text : 'Good night', likesCount: 8}
+    ]
+
+  return (
+    <div className={style.myPost}>
+      <div>
+        <h3>New Post</h3>
+      </div>
+      <div>
+        <textarea></textarea>
+      </div>
+      <div>
+        <button>Add Post</button>
+      </div>
+      <Post text={postData[0].text} col={postData[0].likesCount} />
+      <Post text={postData[1].text} col={postData[1].likesCount} />
+      <Post text={postData[2].text} col={postData[2].likesCount} />
+    </div>
+  );
+};
+
+export default MyPost;
