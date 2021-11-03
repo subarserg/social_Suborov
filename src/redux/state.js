@@ -1,3 +1,9 @@
+import myRender from "../myRender";
+
+let myRender = () => {
+  console.log(`State change`)
+}
+
 let state = {
   dialogPage: {
     dialogData: [
@@ -19,7 +25,26 @@ let state = {
       { id: 2, text: "How are you", likesCount: 7 },
       { id: 3, text: "Good night", likesCount: 8 },
     ],
+    newPostText: ''
   },
 };
+
+export const addPost = (newPostText) =>{
+  let post = {
+    id: 4,
+    text: newPostText,
+    likesCount: 0
+  }
+  state.profilePage.postData.unshift(post)
+  myRender()
+}
+
+export const addNewPostText = (newText) =>{
+  let newPostText = state.profilePage.newPostText
+  newPostText = newText
+}
+export const subscribe = (observer) => {
+  myRender = observer;
+}
 
 export default state

@@ -1,5 +1,5 @@
 import React from "react";
-import { BrowserRouter, Route } from "react-router-dom";
+import { Route } from "react-router-dom";
 import "./App.css";
 import Dialog from "./components/Dialog/Dialog";
 import Footer from "./components/Footer/Footer";
@@ -9,7 +9,7 @@ import Profile from "./components/Profile/Profile";
 
 const App = (props) => {
   return (
-    <BrowserRouter>
+    
       <div className="app-wraper">
         <Header />
         <NavBar />
@@ -22,7 +22,7 @@ const App = (props) => {
         </div>
         <Footer />
       </div>
-    </BrowserRouter>
+    
   );
 };
 
