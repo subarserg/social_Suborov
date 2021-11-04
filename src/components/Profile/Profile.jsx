@@ -3,10 +3,12 @@ import MyPost from "./MyPosts/MyPost";
 import ProfileInfo from "./ProfileInfo/ProfileInfo";
 
 const Profile = props => {
+  //debugger;
   return (
     <main>
       <ProfileInfo />
-      <MyPost postData={props.state.postData} newText={props.state.newPostText} />
+      <MyPost postData={props.store.profilePage.postData} newText={props.store.profilePage.newPostText} 
+      addPost={props.addPost} addNewPostText={props.addNewPostText} />
     </main>
   );
 };

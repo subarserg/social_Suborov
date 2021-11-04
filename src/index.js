@@ -1,29 +1,26 @@
 import reportWebVitals from "./reportWebVitals";
-import myRender from "./myRender";
 import React from "react";
 import ReactDOM from "react-dom";
 import "./index.css";
 import App from "./App";
-import state, { subscribe } from "./redux/state.js";
+import store from "./redux/state.js";
 import { BrowserRouter } from "react-router-dom";
 
 
 
-let myRender = () =>{
+let myRender = (state) =>{//2
   ReactDOM.render(
     <React.StrictMode>
       <BrowserRouter>
-        <App state={state} />
+        <App store={state} addPost={store.addPost.bind(store)} addNewPostText={store.addNewPostText.bind(store)}/>
       </BrowserRouter>
     </React.StrictMode>,
     document.getElementById("root")
   );
 }
 
-export default myRender
+myRender(store.getState()) //1
 
-myRender()
+store.subscribe(myRender)//3
 
-subscribe(myRender)
-
-reportWebVitals();
+reportWebVitals();//4
