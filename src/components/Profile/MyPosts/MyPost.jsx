@@ -7,7 +7,7 @@ const MyPost = (props) => {
   let newPostText = React.createRef();
 
   const onAddPost = () => {
-    props.addPost(newPostText.current.value);
+    props.dispatch({type: `ADD-POST`});
   };
   let postDataElements = props.postData.map((el) => (
     <Post text={el.text} col={el.likesCount} />
@@ -15,7 +15,7 @@ const MyPost = (props) => {
 
   const onChangeNewText = () => {
     //debugger;
-    props.addNewPostText(newPostText.current.value);
+    props.dispatch({type: `UPDATE-NEW-POST-TEXT`, newText: newPostText.current.value } );
   };
 
   return (

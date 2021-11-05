@@ -1,3 +1,5 @@
+const ADD_POST = `ADD-POST`
+
 let store = {
   _state: {
     dialogPage: {
@@ -28,23 +30,23 @@ let store = {
     return this._state 
   },
   _myRender() {},
-  addPost() {
-    let post = {
-      id: 4,
-      text: this._state.profilePage.newPostText,
-      likesCount: 0,
-    };
-    this._state.profilePage.postData.unshift(post);
-    this._state.profilePage.newPostText = ``;
-    this._myRender(this._state);
-  },
-  addNewPostText(newText) {
-    this._state.profilePage.newPostText = newText;
-    this._myRender(this._state);
-  },
   subscribe(observer) {
     this._myRender = observer;
   },
-};
-
+  dispatch(action){
+    if (action.type === ADD_POST){
+      let post = {
+        id: 4,
+        text: this._state.profilePage.newPostText,
+        likesCount: 0,
+      };
+      this._state.profilePage.postData.unshift(post);
+      this._state.profilePage.newPostText = ``;
+      this._myRender(this._state);
+    }else if (action.type === `UPDATE-NEW-POST-TEXT`){
+      this._state.profilePage.newPostText = action.newText;
+    this._myRender(this._state);
+    }
+  }
+}
 export default store;

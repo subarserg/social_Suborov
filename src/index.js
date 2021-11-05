@@ -12,7 +12,7 @@ let myRender = (state) =>{//2
   ReactDOM.render(
     <React.StrictMode>
       <BrowserRouter>
-        <App store={state} addPost={store.addPost.bind(store)} addNewPostText={store.addNewPostText.bind(store)}/>
+        <App store={state} dispatch={store.dispatch.bind(store)} />
       </BrowserRouter>
     </React.StrictMode>,
     document.getElementById("root")
