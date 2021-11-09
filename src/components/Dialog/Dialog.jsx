@@ -1,5 +1,5 @@
 import React from "react";
-import { addMessageAC, updateNewMessageTextAC } from "../../redux/state";
+import { addMessageAC, updateNewMessageTextAC } from "../../redux/dialog_reduser";
 import style from "./Dialog.module.css";
 import DialogItems from "./DialogData/DialogData";
 import Messanges from "./MessegesData/MessegesData";

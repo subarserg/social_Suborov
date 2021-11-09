@@ -1,24 +1,21 @@
 import React from "react";
 import Post from "./Post/Post";
 import style from "./MyPost.module.css";
-import {onAddPostActionCreator, onChangeNewTextActionCreator} from "../../../redux/state";
+import {onAddPostActionCreator, onChangeNewTextActionCreator} from "../../../redux/profile_reduser";
 
 
 
 const MyPost = (props) => {
-  let newPostText = React.createRef();
 
   const onAddPost = () => {
-    //props.dispatch({type: `ADD-POST`});
     props.dispatch(onAddPostActionCreator());
   };
   let postDataElements = props.postData.map((el) => (
     <Post text={el.text} col={el.likesCount} />
   ));
 
-  const onChangeNewText = () => {
-    //props.dispatch({type: `UPDATE-NEW-POST-TEXT`, newText: newPostText.current.value } );
-    props.dispatch(onChangeNewTextActionCreator(newPostText.current.value))
+  const onChangeNewText = (event) => {
+    props.dispatch(onChangeNewTextActionCreator(event.target.value))
   };
 
   return (
@@ -29,7 +26,6 @@ const MyPost = (props) => {
       <div>
         <textarea
           value={props.newText}
-          ref={newPostText}
           onChange={onChangeNewText}
         />
       </div>
