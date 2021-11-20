@@ -8,14 +8,14 @@ import {onAddPostActionCreator, onChangeNewTextActionCreator} from "../../../red
 const MyPost = (props) => {
 
   const onAddPost = () => {
-    props.dispatch(onAddPostActionCreator());
+    props.addPost();
   };
   let postDataElements = props.postData.map((el) => (
     <Post text={el.text} col={el.likesCount} />
   ));
 
   const onChangeNewText = (event) => {
-    props.dispatch(onChangeNewTextActionCreator(event.target.value))
+    props.changeNewText(event.target.value)
   };
 
   return (

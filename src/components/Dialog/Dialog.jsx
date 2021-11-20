@@ -5,20 +5,21 @@ import DialogItems from "./DialogData/DialogData";
 import Messanges from "./MessegesData/MessegesData";
 
 const Dialog = (props) => {
-  let dialogsElements = props.store.dialogPage.dialogData.map((el) => (
+  debugger;
+  let dialogsElements = props.dialogData.map((el) => (
     <DialogItems name={el.name} id={el.id} />
   ));
 
-  let messagesDataElements = props.store.dialogPage.messagesData.map((el) => (
+  let messagesDataElements = props.messagesData.map((el) => (
     <Messanges sms={el.message} />
   ));
 
 const onChangeNewMessange = (event) =>{
-  return props.dispatch(updateNewMessageTextAC(event.target.value))
+  return props.changeNewMessange(event.target.value)
 }
 
 const onAddMessage = () =>{
-  return props.dispatch(addMessageAC())
+  return props.addMessage()
 }
 
   return (
@@ -26,7 +27,7 @@ const onAddMessage = () =>{
       <div className={style.dialogItems}>{dialogsElements}</div>
       <div className={style.messanges}>
         {messagesDataElements}
-        <div><textarea onChange={onChangeNewMessange} value={props.store.dialogPage.newMessageText} /></div>
+        <div><textarea onChange={onChangeNewMessange} value={props.newMessageText} /></div>
         <div><button onClick={onAddMessage}>Add message</button></div>
       </div>
     </div>
