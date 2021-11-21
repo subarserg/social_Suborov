@@ -1,5 +1,5 @@
-const UPDATE_NEW_MESSAGE_TEXT = `UPDATE_NEW_MESSAGE_TEXT`;
-const ADD_MESSAGE = `ADD_MESSAGE`;
+const UPDATE_NEW_MESSAGE_TEXT = `dialog/Sergey_Suborov/UPDATE_NEW_MESSAGE_TEXT`;
+const ADD_MESSAGE = `dialog/Sergey_Suborov/ADD_MESSAGE`;
 
 const defaultState = {
     dialogData: [
@@ -18,28 +18,33 @@ const defaultState = {
   }
 
 const dialogReduser = (state=defaultState, action) => {
+
   switch (action.type) {
     case UPDATE_NEW_MESSAGE_TEXT:
-      state.newMessageText = action.newMessage;
-      return state;
+      return {
+        ...state,
+        newMessageText: action.newMessage
+      };
     case ADD_MESSAGE:
       let mess = {
         id: 4,
         message: state.newMessageText,
       };
-      state.messagesData.push(mess);
-      state.newMessageText = ``;
-      return state;
+      return {
+        ...state,
+        newMessageText: ``,
+        messagesData: [...state.messagesData,mess]
+      };
     default:
       return state;
   }
 };
 
-export const updateNewMessageTextAC = (text) => {
+export const setUpdateNewMessageTextSuccess = (text) => {
   return { type: UPDATE_NEW_MESSAGE_TEXT, newMessage: text };
 };
 
-export const addMessageAC = () => {
+export const setAddMessageSuccess = () => {
   return { type: ADD_MESSAGE };
 };
 

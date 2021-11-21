@@ -1,5 +1,4 @@
 import React from "react";
-import { addMessageAC, updateNewMessageTextAC } from "../../redux/dialog_reduser";
 import style from "./Dialog.module.css";
 import DialogItems from "./DialogData/DialogData";
 import Messanges from "./MessegesData/MessegesData";
@@ -15,11 +14,11 @@ const Dialog = (props) => {
   ));
 
 const onChangeNewMessange = (event) =>{
-  return props.changeNewMessange(event.target.value)
+  return props.setUpdateNewMessageTextSuccess(event.target.value)
 }
 
 const onAddMessage = () =>{
-  return props.addMessage()
+  return props.setAddMessageSuccess()
 }
 
   return (

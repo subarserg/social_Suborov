@@ -1,22 +1,13 @@
-import React from "react";
-import { addMessageAC, updateNewMessageTextAC } from "../../redux/dialog_reduser";
+import { connect } from "react-redux";
+import { setUpdateNewMessageTextSuccess, setAddMessageSuccess } from "../../redux/dialog_reduser";
 import Dialog from "./Dialog";
 
-const DialogContainer = (props) => {
-  debugger;
-  let state = props.store.getState()
-const onChangeNewMessange = (sms) =>{
-  return props.dispatch(updateNewMessageTextAC(sms))
-}
 
-const onAddMessage = () =>{
-  return props.dispatch(addMessageAC())
-}
+let mapStateToProps = (state) => ({
+  dialogData: state.dialogReduser.dialogData,
+  newMessageText: state.dialogReduser.newMessageText,
+  messagesData: state.dialogReduser.messagesData
 
-  return (
-    <Dialog changeNewMessange={onChangeNewMessange} addMessage={onAddMessage} messagesData={state.dialogReduser.messagesData}
-    dialogData={state.dialogReduser.dialogData} newMessageText={state.dialogReduser.newMessageText} />
-  );
-};
+})
 
-export default DialogContainer;
+export default connect(mapStateToProps, {setUpdateNewMessageTextSuccess, setAddMessageSuccess })(Dialog)

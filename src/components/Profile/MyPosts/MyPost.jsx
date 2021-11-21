@@ -1,21 +1,20 @@
 import React from "react";
 import Post from "./Post/Post";
 import style from "./MyPost.module.css";
-import {onAddPostActionCreator, onChangeNewTextActionCreator} from "../../../redux/profile_reduser";
 
 
 
 const MyPost = (props) => {
-
+  debugger;
   const onAddPost = () => {
-    props.addPost();
+    props.setAddPostSuccess();
   };
   let postDataElements = props.postData.map((el) => (
     <Post text={el.text} col={el.likesCount} />
   ));
 
   const onChangeNewText = (event) => {
-    props.changeNewText(event.target.value)
+    props.setChangeNewTextSuccess(event.target.value)
   };
 
   return (

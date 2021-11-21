@@ -1,5 +1,5 @@
-const ADD_POST = `ADD-POST`;
-const UPDATE_NEW_POST_TEXT = `UPDATE-NEW-POST-TEXT`;
+const ADD_POST = `profile/Sergey_Suborov/ADD-POST`;
+const UPDATE_NEW_POST_TEXT = `profile/Sergey_Suborov/UPDATE-NEW-POST-TEXT`;
 
 const defaultState = {
   postData: [
@@ -8,33 +8,38 @@ const defaultState = {
     { id: 3, text: "Good night", likesCount: 8 },
   ],
   newPostText: "",
-}
+};
 
-const profileReduser = (state=defaultState, action) => {
+const profileReduser = (state = defaultState, action) => {
   switch (action.type) {
     case ADD_POST:
-      let post = {
+      let postData = {
         id: 4,
         text: state.newPostText,
         likesCount: 0,
       };
-      state.postData.unshift(post);
-      state.newPostText = ``;
-      return state;
-    case UPDATE_NEW_POST_TEXT:
-      state.newPostText = action.newText;
-      return state;
+      return {
+        ...state,
+        newPostText: "",
+        postData: [...state.postData, postData],
+      };
+    case UPDATE_NEW_POST_TEXT: {
+      return {
+        ...state,
+        newPostText: action.text,
+      };
+    }
     default:
       return state;
   }
 };
 
-export const onAddPostActionCreator = () => {
+export const setAddPostSuccess = () => {
   return { type: ADD_POST };
 };
 
-export const onChangeNewTextActionCreator = (text) => {
-  return { type: UPDATE_NEW_POST_TEXT, newText: text };
+export const setChangeNewTextSuccess = (text) => {
+  return { type: UPDATE_NEW_POST_TEXT, text };
 };
 
 export default profileReduser;
