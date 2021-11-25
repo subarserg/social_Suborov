@@ -6,6 +6,7 @@ import Footer from "./components/Footer/Footer";
 import Header from "./components/Header/Header";
 import NavBar from "./components/NavBar/NavBar";
 import Profile from "./components/Profile/Profile";
+import UsersContainer from "./components/Users/UsersContainer";
 
 const App = (props) => {
   return (
@@ -18,6 +19,7 @@ const App = (props) => {
             path="/dialog"
             render={() => <DialogContainer />}
           />
+          <Route path="/users" render={() => <UsersContainer />} />
         </div>
         <Footer />
       </div>

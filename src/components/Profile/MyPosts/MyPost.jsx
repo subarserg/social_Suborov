@@ -5,7 +5,6 @@ import style from "./MyPost.module.css";
 
 
 const MyPost = (props) => {
-  debugger;
   const onAddPost = () => {
     props.setAddPostSuccess();
   };
