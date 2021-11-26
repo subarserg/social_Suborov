@@ -1,35 +1,39 @@
 const FOLLOW = `users/Sergey_Suborov/FOLLOW`;
 const UNFOLLOW = `users/Sergey_Suborov/UNFOLLOW`;
+const SET_USERS = `users/Sergey_Suborov/SET_USERS`;
 
 const defaultState = {
-  users: [
-    { id: 1, fullName: `Sergey Suborov`, status: `I am very cool!`, followed: true, location: {country: `Belarus`, city: `Orsha`}, photos: "https://pngicon.ru/file/uploads/vinni-pukh-v-png-256x256.png"},
-    { id: 2, fullName: `Alexandr Andreev`, status: `I am very cool!`, followed: false, location: {country: `Poland`, city: `Warshava`}, photos: "https://pngicon.ru/file/uploads/vinni-pukh-v-png-256x256.png"},
-  ],
+  users: [],
 };
 
 const usersReduser = (state = defaultState, action) => {
+  debugger;
   switch (action.type) {
     case FOLLOW:
       return {
         ...state,
-        users: state.users.map((user)=>{
+        users: state.users.map((user) => {
           if (action.idUser === user.id) {
-            return {...user,followed: true}
+            return { ...user, followed: true };
           }
-          return user
-        })
-      }
-      case UNFOLLOW:
-        return {
-          ...state,
-          users: state.users.map((user)=>{
-            if(action.idUser === user.id) {
-              return {...user,followed: false}
-            }
-            return user
-          })
-        }
+          return user;
+        }),
+      };
+    case UNFOLLOW:
+      return {
+        ...state,
+        users: state.users.map((user) => {
+          if (action.idUser === user.id) {
+            return { ...user, followed: false };
+          }
+          return user;
+        }),
+      };
+    case SET_USERS:
+      return {
+        ...state,
+        users: [...action.users]
+      }    
     default:
       return state;
   }
@@ -42,5 +46,10 @@ export const setFollowSuccess = (idUser) => {
 export const setUnfollowSuccess = (idUser) => {
   return { type: UNFOLLOW, idUser };
 };
+
+export const setUsersSuccess = (users) => {
+  debugger;
+  return { type: SET_USERS, users}
+}
 
 export default usersReduser;
