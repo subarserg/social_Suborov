@@ -1,5 +1,6 @@
 const ADD_POST = `profile/Sergey_Suborov/ADD-POST`;
 const UPDATE_NEW_POST_TEXT = `profile/Sergey_Suborov/UPDATE-NEW-POST-TEXT`;
+const GET_PROFILE = `profile/Sergey_Suborov/GET_PROFILE`;
 
 const defaultState = {
   postData: [
@@ -8,6 +9,7 @@ const defaultState = {
     { id: 3, text: "Good night", likesCount: 8 },
   ],
   newPostText: "",
+  profile: null,
 };
 
 const profileReduser = (state = defaultState, action) => {
@@ -29,6 +31,12 @@ const profileReduser = (state = defaultState, action) => {
         newPostText: action.text,
       };
     }
+    case GET_PROFILE: {
+      return {
+        ...state,
+        profile: action.profile,
+      }
+    }
     default:
       return state;
   }
@@ -41,5 +49,9 @@ export const setAddPostSuccess = () => {
 export const setChangeNewTextSuccess = (text) => {
   return { type: UPDATE_NEW_POST_TEXT, text };
 };
+
+export const setProfileSuccess = (profile) => {
+  return { type: GET_PROFILE, profile}
+}
 
 export default profileReduser;

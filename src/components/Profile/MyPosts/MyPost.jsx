@@ -1,19 +1,26 @@
 import React from "react";
 import Post from "./Post/Post";
 import style from "./MyPost.module.css";
+import { useSelector } from "react-redux";
+import { useDispatch } from "react-redux";
+import { setAddPostSuccess, setChangeNewTextSuccess } from "../../../redux/profile_reduser";
 
 
 
 const MyPost = (props) => {
+  const postData = useSelector(state => state.profileReduser.postData)
+  const newText = useSelector(state => state.profileReduser.newPostText)
+  const dispatch = useDispatch()
+
   const onAddPost = () => {
-    props.setAddPostSuccess();
+    dispatch(setAddPostSuccess());
   };
-  let postDataElements = props.postData.map((el) => (
+  let postDataElements = postData.map((el) => (
     <Post text={el.text} col={el.likesCount} />
   ));
 
   const onChangeNewText = (event) => {
-    props.setChangeNewTextSuccess(event.target.value)
+    dispatch(setChangeNewTextSuccess(event.target.value))
   };
 
   return (
@@ -23,7 +30,7 @@ const MyPost = (props) => {
       </div>
       <div>
         <textarea
-          value={props.newText}
+          value={newText}
           onChange={onChangeNewText}
         />
       </div>

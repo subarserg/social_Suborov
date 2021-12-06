@@ -1,49 +1,74 @@
 import axios from "axios";
-import React from "react";
+import React, { useEffect } from "react";
+import { useDispatch } from "react-redux";
+import { useSelector } from "react-redux";
+import {
+  setCarentPageSuccess,
+  setTotalUsersCountSuccess,
+  setUsersSuccess,
+} from "../../redux/users_reduser";
 import User from "./User";
-import style from "./Users.module.css"
+import style from "./Users.module.css";
 
-class Users extends React.Component {
-  componentDidMount() {
-    if (this.props.users.length === 0) {
+const Users = () => {
+  const users = useSelector((state) => state.usersReduser.users);
+  const pageSize = useSelector((state) => state.usersReduser.pageSize);
+  const totalUsersCount = useSelector(
+    (state) => state.usersReduser.totalUsersCount
+  );
+  const carentPage = useSelector((state) => state.usersReduser.carentPage);
+  const dispatch = useDispatch();
+
+  useEffect(() => {
+    if (users.length === 0) {
       axios
-        .get(`https://social-network.samuraijs.com/api/1.0/users?page=${this.props.carentPage}&count=${this.props.pageSize}`)
+        .get(
+          `https://social-network.samuraijs.com/api/1.0/users?page=${carentPage}&count=${pageSize}`,
+          { withCredentials: true }
+        )
         .then((response) => {
-          this.props.setUsersSuccess(response.data.items);
-          this.props.setTotalUsersCountSuccess(response.data.totalCount);
+          dispatch(setUsersSuccess(response.data.items));
+          dispatch(setTotalUsersCountSuccess(response.data.totalCount));
         });
     }
-  };
-  onSetCarentPageSuccess = (carentPage) => {
-    this.props.setCarentPageSuccess(carentPage)
+  }, []);
+
+  const onSetCarentPageSuccess = (carentPage) => {
+    dispatch(setCarentPageSuccess(carentPage));
     axios
-        .get(`https://social-network.samuraijs.com/api/1.0/users?page=${carentPage}&count=${this.props.pageSize}`)
-        .then((response) => {
-          this.props.setUsersSuccess(response.data.items);
-        });
+      .get(
+        `https://social-network.samuraijs.com/api/1.0/users?page=${carentPage}&count=${pageSize}`,
+        { withCredentials: true }
+      )
+      .then((response) => {
+        dispatch(setUsersSuccess(response.data.items));
+      });
+  };
+
+  let pagesCount = Math.ceil(totalUsersCount / pageSize);
+  let pages = [];
+  for (let i = 1; i <= pagesCount; i++) {
+    pages.push(i);
   }
-  render() {
-    let pagesCount = Math.ceil(this.props.totalUsersCount/this.props.pageSize);
-    let pages = [];
-    for(let i=1; i <= pagesCount; i++){
-      pages.push(i)
-    }
-    return (
+  return (
+    <div>
       <div>
-        <div>
-          {pages.map(p => <span className={this.props.carentPage === p && style.selectPage} onClick={(e)=>{this.onSetCarentPageSuccess(p)}} >{p}</span>)}
-        </div>
-        {this.props.users.map((user) => (
-          <User
-            user={user}
-            key={user.id}
-            setUnfollowSuccess={this.props.setUnfollowSuccess}
-            setFollowSuccess={this.props.setFollowSuccess}
-          />
+        {pages.map((p) => (
+          <span
+            className={carentPage === p && style.selectPage}
+            onClick={(e) => {
+              onSetCarentPageSuccess(p);
+            }}
+          >
+            {p}
+          </span>
         ))}
       </div>
-    );
-  }
-}
+      {users.map((user) => (
+        <User user={user} key={user.id} />
+      ))}
+    </div>
+  );
+};
 
 export default Users;

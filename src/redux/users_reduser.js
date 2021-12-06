@@ -12,7 +12,6 @@ const defaultState = {
 };
 
 const usersReduser = (state = defaultState, action) => {
-  debugger;
   switch (action.type) {
     case FOLLOW:
       return {
