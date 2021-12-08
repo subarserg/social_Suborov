@@ -1,11 +1,9 @@
-import axios from "axios";
 import React, { useEffect } from "react";
 import { useDispatch } from "react-redux";
 import { useSelector } from "react-redux";
 import {
-  setCarentPageSuccess,
-  setTotalUsersCountSuccess,
-  setUsersSuccess,
+  getUsers2Thunk,
+  getUsersThunk,
 } from "../../redux/users_reduser";
 import User from "./User";
 import style from "./Users.module.css";
@@ -16,39 +14,28 @@ const Users = () => {
   const totalUsersCount = useSelector(
     (state) => state.usersReduser.totalUsersCount
   );
+  const isPreloader = useSelector((state) => state.usersReduser.isPreloader);
   const carentPage = useSelector((state) => state.usersReduser.carentPage);
   const dispatch = useDispatch();
+ 
 
   useEffect(() => {
     if (users.length === 0) {
-      axios
-        .get(
-          `https://social-network.samuraijs.com/api/1.0/users?page=${carentPage}&count=${pageSize}`,
-          { withCredentials: true }
-        )
-        .then((response) => {
-          dispatch(setUsersSuccess(response.data.items));
-          dispatch(setTotalUsersCountSuccess(response.data.totalCount));
-        });
+      dispatch(getUsersThunk(carentPage, pageSize))
     }
   }, []);
 
   const onSetCarentPageSuccess = (carentPage) => {
-    dispatch(setCarentPageSuccess(carentPage));
-    axios
-      .get(
-        `https://social-network.samuraijs.com/api/1.0/users?page=${carentPage}&count=${pageSize}`,
-        { withCredentials: true }
-      )
-      .then((response) => {
-        dispatch(setUsersSuccess(response.data.items));
-      });
+    dispatch(getUsers2Thunk(carentPage))
   };
 
   let pagesCount = Math.ceil(totalUsersCount / pageSize);
   let pages = [];
   for (let i = 1; i <= pagesCount; i++) {
     pages.push(i);
+  }
+  if(isPreloader){
+    return <div>LOADING...</div>
   }
   return (
     <div>

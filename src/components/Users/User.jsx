@@ -1,10 +1,9 @@
-import axios from "axios";
-import React from "react";
+import React, { useState } from "react";
 import { useDispatch } from "react-redux";
 import { NavLink } from "react-router-dom";
 import {
+  deleteFollowUserThunk,
   setFollowSuccess,
-  setUnfollowSuccess,
 } from "../../redux/users_reduser";
 import imgAva from "./../../assets/images/images.png";
 import style from "./Users.module.css";
@@ -12,38 +11,18 @@ import style from "./Users.module.css";
 const User = (props) => {
   const dispatch = useDispatch();
 
+  let [buttonInProgress, setButtonInProgres] = useState(false);
+
   const onUnfollowClick = () => {
-    axios
-      .delete(
-        `https://social-network.samuraijs.com/api/1.0/follow/${props.user.id}`,
-        { withCredentials: true,
-          headers: {
-            "API-KEY": "0606a532-d9ec-4e49-9195-c2feb1d79711"
-          }
-        }
-      )
-      .then((response) => {
-        if (response.data.resultCode === 0) {
-          dispatch(setUnfollowSuccess(props.user.id));
-        }
-      });
+    setButtonInProgres(true);
+    dispatch(deleteFollowUserThunk(props.user.id));
+    setButtonInProgres(false);
   };
 
   const onFollowClick = () => {
-    axios
-      .post(
-        `https://social-network.samuraijs.com/api/1.0/follow/${props.user.id}`,
-        {},
-        { withCredentials: true,
-          headers: {
-            "API-KEY": "0606a532-d9ec-4e49-9195-c2feb1d79711"
-          } }
-      )
-      .then((response) => {
-        if (response.data.resultCode === 0) {
-          dispatch(setFollowSuccess(props.user.id));
-        }
-      });
+    setButtonInProgres(true);
+    dispatch(setFollowSuccess(props.user.id));
+    setButtonInProgres(false);
   };
 
   return (
@@ -67,11 +46,15 @@ const User = (props) => {
         </div>
         {props.user.followed ? (
           <div>
-            <button onClick={onUnfollowClick}>UNFOLLOW</button>
+            <button disabled={buttonInProgress} onClick={onUnfollowClick}>
+              UNFOLLOW
+            </button>
           </div>
         ) : (
           <div>
-            <button onClick={onFollowClick}>FOLLOW</button>
+            <button disabled={buttonInProgress} onClick={onFollowClick}>
+              FOLLOW
+            </button>
           </div>
         )}
       </div>
