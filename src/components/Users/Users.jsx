@@ -5,6 +5,7 @@ import {
   getUsers2Thunk,
   getUsersThunk,
 } from "../../redux/users_reduser";
+import { withRedirect } from "../hoc/withRedirect";
 import User from "./User";
 import style from "./Users.module.css";
 
@@ -58,4 +59,6 @@ const Users = () => {
   );
 };
 
-export default Users;
+const UsersRiderect = withRedirect(Users)
+
+export default UsersRiderect;

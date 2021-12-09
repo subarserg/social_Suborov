@@ -1,8 +1,7 @@
-import  axios  from "axios";
 import React, { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { useRouteMatch } from "react-router";
-import { setProfileSuccess } from "../../../redux/profile_reduser";
+import { getProfileUsersThunk } from "../../../redux/profile_reduser";
 import style from './ProfileInfo.module.css'
 
 
@@ -16,9 +15,7 @@ const ProfileInfo = (props) => {
     if(!userId){
       userId = 21028
     }
-    axios.get(`https://social-network.samuraijs.com/api/1.0/profile/${userId}`).then((response)=>{
-      dispatch(setProfileSuccess(response.data))
-    })
+    dispatch(getProfileUsersThunk(userId))
   }, [match.params.userId])
 
 

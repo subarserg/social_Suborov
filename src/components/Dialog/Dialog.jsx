@@ -2,6 +2,7 @@ import React from "react";
 import { useDispatch } from "react-redux";
 import { useSelector } from "react-redux";
 import { setAddMessageSuccess, setUpdateNewMessageTextSuccess } from "../../redux/dialog_reduser";
+import { withRedirect } from "../hoc/withRedirect";
 import style from "./Dialog.module.css";
 import DialogItems from "./DialogData/DialogData";
 import Messanges from "./MessegesData/MessegesData";
@@ -40,4 +41,6 @@ const onAddMessage = () =>{
   );
 };
 
-export default Dialog;
+const DialogRiderect = withRedirect(Dialog)
+
+export default DialogRiderect;

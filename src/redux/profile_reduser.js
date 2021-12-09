@@ -1,3 +1,5 @@
+import { getProfileUsers } from "../DAL/api";
+
 const ADD_POST = `profile/Sergey_Suborov/ADD-POST`;
 const UPDATE_NEW_POST_TEXT = `profile/Sergey_Suborov/UPDATE-NEW-POST-TEXT`;
 const GET_PROFILE = `profile/Sergey_Suborov/GET_PROFILE`;
@@ -53,5 +55,11 @@ export const setChangeNewTextSuccess = (text) => {
 export const setProfileSuccess = (profile) => {
   return { type: GET_PROFILE, profile}
 }
+
+export const getProfileUsersThunk = (userId) => (dispatch) => {
+  getProfileUsers(userId).then((data) => {
+    dispatch(setProfileSuccess(data))
+})
+} 
 
 export default profileReduser;

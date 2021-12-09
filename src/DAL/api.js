@@ -19,3 +19,6 @@ export const postFollowUser = (userID) => instanse.post(`follow/${userID}`).then
 
 export const deleteFollowUser = (userId) => instanse.delete(`follow/${userId}`).then(response=>response.data)
 
+export const getProfileUsers = (userId) => instanse.get(`profile/${userId}`).then((response)=>response.data)
+      
+  
