@@ -21,4 +21,6 @@ export const deleteFollowUser = (userId) => instanse.delete(`follow/${userId}`).
 
 export const getProfileUsers = (userId) => instanse.get(`profile/${userId}`).then((response)=>response.data)
       
-  
+export const getStatusUser = (userId) => instanse.get(`/profile/status/${userId}`).then(response=>response.data)
+
+export const putStatusUser = (status) => instanse.put(`/profile/status/`, {status: status} ).then(response=>response)

@@ -1,8 +1,9 @@
-import { getProfileUsers } from "../DAL/api";
+import { getProfileUsers, getStatusUser, putStatusUser } from "../DAL/api";
 
 const ADD_POST = `profile/Sergey_Suborov/ADD-POST`;
 const UPDATE_NEW_POST_TEXT = `profile/Sergey_Suborov/UPDATE-NEW-POST-TEXT`;
 const GET_PROFILE = `profile/Sergey_Suborov/GET_PROFILE`;
+const GET_STATUS = `profile/Sergey_Suborov/GET_STATUS`
 
 const defaultState = {
   postData: [
@@ -12,6 +13,7 @@ const defaultState = {
   ],
   newPostText: "",
   profile: null,
+  status: ``
 };
 
 const profileReduser = (state = defaultState, action) => {
@@ -39,6 +41,12 @@ const profileReduser = (state = defaultState, action) => {
         profile: action.profile,
       }
     }
+    case GET_STATUS: {
+      return {
+        ...state,
+        status : action.status,
+      }
+    }
     default:
       return state;
   }
@@ -56,10 +64,29 @@ export const setProfileSuccess = (profile) => {
   return { type: GET_PROFILE, profile}
 }
 
+const setStatusSuccess = (status) => {
+  return { type: GET_STATUS, status}
+}
+
 export const getProfileUsersThunk = (userId) => (dispatch) => {
   getProfileUsers(userId).then((data) => {
     dispatch(setProfileSuccess(data))
 })
 } 
+
+export const getStatusUserThunk = (userId) => (dispatch) => {
+  getStatusUser(userId).then((data)=>{
+    dispatch(setStatusSuccess(data))
+  })
+}
+
+export const putStatusUserThunk = (status) => (dispatch) => {
+  debugger
+  putStatusUser(status).then((response)=>{
+    if(response.resultCode === 0){
+      dispatch(setStatusSuccess(status))
+    }
+  })
+}
 
 export default profileReduser;
