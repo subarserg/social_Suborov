@@ -81,8 +81,8 @@ export const getStatusUserThunk = (userId) => (dispatch) => {
 }
 
 export const putStatusUserThunk = (status) => (dispatch) => {
-  debugger
   putStatusUser(status).then((response)=>{
+    debugger;
     if(response.resultCode === 0){
       dispatch(setStatusSuccess(status))
     }

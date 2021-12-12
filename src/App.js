@@ -1,6 +1,8 @@
 import React from "react";
 import { Route } from "react-router-dom";
 import "./App.css";
+import 'formik-antd/es/input/style';
+import 'antd/dist/antd.css';
 import Dialog from "./components/Dialog/Dialog";
 import Footer from "./components/Footer/Footer";
 import Header from "./components/Header/Header";
