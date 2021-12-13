@@ -1,7 +1,6 @@
 import React from "react";
 import { withRedirect } from "../hoc/withRedirect";
 import MyPost from "./MyPosts/MyPost";
-
 import ProfileInfo from "./ProfileInfo/ProfileInfo";
 
 const Profile = props => {
@@ -13,7 +12,7 @@ const Profile = props => {
   );
 };
 
-const RiderectProfile = withRedirect(Profile)
+const RedirectProfile = withRedirect(Profile)
 
 
-export default RiderectProfile;
+export default RedirectProfile;

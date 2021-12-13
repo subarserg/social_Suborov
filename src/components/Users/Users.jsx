@@ -8,15 +8,19 @@ import {
 import { withRedirect } from "../hoc/withRedirect";
 import User from "./User";
 import style from "./Users.module.css";
+import {
+  getCarentPageSelector,
+  getIsPreloaderSelector, getPageSizeSelector,
+  getTotalUsersSelector,
+  getUsersSelector
+} from "../../redux/Selectors/user_selector";
 
 const Users = () => {
-  const users = useSelector((state) => state.usersReduser.users);
-  const pageSize = useSelector((state) => state.usersReduser.pageSize);
-  const totalUsersCount = useSelector(
-    (state) => state.usersReduser.totalUsersCount
-  );
-  const isPreloader = useSelector((state) => state.usersReduser.isPreloader);
-  const carentPage = useSelector((state) => state.usersReduser.carentPage);
+  const users = useSelector(getUsersSelector);
+  const pageSize = useSelector(getPageSizeSelector);
+  const totalUsersCount = useSelector(getTotalUsersSelector);
+  const isPreloader = useSelector(getIsPreloaderSelector);
+  const carentPage = useSelector(getCarentPageSelector);
   const dispatch = useDispatch();
  
 

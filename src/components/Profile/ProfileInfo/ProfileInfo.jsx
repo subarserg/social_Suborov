@@ -1,9 +1,9 @@
 import React, { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { useRouteMatch } from "react-router";
 import { getProfileUsersThunk } from "../../../redux/profile_reduser";
 import style from './ProfileInfo.module.css'
 import ProfileStatus from "./ProfileStatus";
+import {useRouteMatch} from "react-router-dom";
 
 
 const ProfileInfo = (props) => {
