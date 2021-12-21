@@ -64,7 +64,7 @@ export const setProfileSuccess = (profile) => {
   return { type: GET_PROFILE, profile}
 }
 
-const setStatusSuccess = (status) => {
+export const setStatusSuccess = (status) => {
   return { type: GET_STATUS, status}
 }
 

@@ -16,7 +16,7 @@ const MyPost = (props) => {
     dispatch(setAddPostSuccess());
   };
   let postDataElements = postData.map((el) => (
-    <Post text={el.text} col={el.likesCount} />
+    <Post key={el.id} text={el.text} col={el.likesCount} />
   ));
 
   const onChangeNewText = (event) => {

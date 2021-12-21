@@ -2,7 +2,7 @@ import React, { useState } from "react";
 import { useDispatch } from "react-redux";
 import { NavLink } from "react-router-dom";
 import {
-  deleteFollowUserThunk,
+  deleteFollowUserThunk, onFollowClickThunk,
   setFollowSuccess,
 } from "../../redux/users_reduser";
 import imgAva from "./../../assets/images/images.png";
@@ -13,16 +13,17 @@ const User = (props) => {
 
   let [buttonInProgress, setButtonInProgres] = useState(false);
 
-  const onUnfollowClick = () => {
+  const followUnfollwFlow = (dispatch, thunk) => {
     setButtonInProgres(true);
-    dispatch(deleteFollowUserThunk(props.user.id));
     setButtonInProgres(false);
+  }
+
+  const onUnfollowClick = () => {
+    followUnfollwFlow(dispatch(deleteFollowUserThunk(props.user.id)));
   };
 
   const onFollowClick = () => {
-    setButtonInProgres(true);
-    dispatch(setFollowSuccess(props.user.id));
-    setButtonInProgres(false);
+    followUnfollwFlow(dispatch(onFollowClickThunk(props.user.id)));
   };
 
   return (

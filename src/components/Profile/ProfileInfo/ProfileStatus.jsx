@@ -24,7 +24,7 @@ const ProfileStatus = (props) => {
     }
     useEffect(()=>{
         dispatch(getStatusUserThunk(props.userId || `21028`))
-    },[props.userId])
+    },[props.userId, dispatch])
     return (
         <div>
             { addStatus ? <div><input autoFocus={true} value={newStatus} onChange={onChangeStatus} type="text" onBlur={onBlurAddStatus} /></div>

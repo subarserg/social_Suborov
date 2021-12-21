@@ -17,7 +17,7 @@ const ProfileInfo = (props) => {
       userId = 21028
     }
     dispatch(getProfileUsersThunk(userId))
-  }, [match.params.userId])
+  }, [match.params.userId, dispatch])
 
 
   return (

@@ -26,13 +26,18 @@ export const setUserDataSuccess = (userId, email, login, isAuth) => ({
     payload: {userId, email, login, isAuth},
 });
 
-export const getAuthUserThunk = () => (dispatch) => {
-    getAuthUser().then((data) => {
+export const getAuthUserThunk = () => async (dispatch) => {
+    try{
+        let data = await getAuthUser()
         if (data.resultCode === 0) {
             let {id, email, login} = data.data;
             dispatch(setUserDataSuccess(id, email, login, true));
         }
-    });
+    }catch (error){
+     console.log(error)
+     //todo: обработать ошибки
+    }
+
 }
 
 export const postIsLoginThunk = (loginData) => (dispatch) => {

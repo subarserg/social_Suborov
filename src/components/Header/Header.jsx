@@ -13,7 +13,7 @@ const Header = () => {
 
   useEffect(() => {
     dispatch(getAuthUserThunk())
-  }, []);
+  }, [dispatch]);
 
   const onLogOut = () => {
       dispatch(deleteLoginThunk())

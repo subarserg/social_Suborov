@@ -1,3 +1,5 @@
+import {InferActionsTypes} from "./store";
+
 const UPDATE_NEW_MESSAGE_TEXT = `dialog/Sergey_Suborov/UPDATE_NEW_MESSAGE_TEXT`;
 const ADD_MESSAGE = `dialog/Sergey_Suborov/ADD_MESSAGE`;
 
@@ -8,16 +10,28 @@ const defaultState = {
       { id: 3, name: "Masha" },
       { id: 4, name: "Denis" },
       { id: 5, name: "Ira" },
-    ],
+    ] as Array<DialogTypes>,
     messagesData: [
       { id: 1, message: "Hello" },
       { id: 2, message: "Hi" },
       { id: 3, message: "Yo" },
-    ],
+    ] as Array<MessageTypes>,
     newMessageText: "",
   }
 
-const dialogReduser = (state=defaultState, action) => {
+  type DialogTypes = {
+  id: number
+  name: string
+}
+
+  type MessageTypes = {
+    id: number
+    message: string
+  }
+
+  type DefaultStateType = typeof defaultState
+
+const dialogReduser = (state=defaultState, action: ActionsTypes): DefaultStateType  => {
 
   switch (action.type) {
     case UPDATE_NEW_MESSAGE_TEXT:
@@ -40,12 +54,13 @@ const dialogReduser = (state=defaultState, action) => {
   }
 };
 
-export const setUpdateNewMessageTextSuccess = (text) => {
-  return { type: UPDATE_NEW_MESSAGE_TEXT, newMessage: text };
-};
+type ActionsTypes = InferActionsTypes<typeof actions>
 
-export const setAddMessageSuccess = () => {
-  return { type: ADD_MESSAGE };
-};
+export const actions = {
+  setUpdateNewMessageTextSuccess: (text: string) => ({type: UPDATE_NEW_MESSAGE_TEXT, newMessage: text } as const),
+  setAddMessageSuccess: () => ({type: ADD_MESSAGE } as const)
+}
+
+
 
 export default dialogReduser;

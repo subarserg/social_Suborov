@@ -28,6 +28,7 @@ const usersReduser = (state = defaultState, action) => {
         }),
       };
     case UNFOLLOW:
+      debugger;
       return {
         ...state,
         users: state.users.map((user) => {

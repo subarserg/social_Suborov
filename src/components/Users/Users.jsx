@@ -28,7 +28,7 @@ const Users = () => {
     if (users.length === 0) {
       dispatch(getUsersThunk(carentPage, pageSize))
     }
-  }, []);
+  }, [dispatch, carentPage, pageSize, users]);
 
   const onSetCarentPageSuccess = (carentPage) => {
     dispatch(getUsers2Thunk(carentPage))
@@ -46,8 +46,8 @@ const Users = () => {
     <div>
       <div>
         {pages.map((p) => (
-          <span
-            className={carentPage === p && style.selectPage}
+          <span key={p}
+            className={carentPage === p ? style.selectPage : ``}
             onClick={(e) => {
               onSetCarentPageSuccess(p);
             }}
