@@ -1,16 +1,17 @@
-import React from "react";
+import React, {ChangeEvent, FC} from "react";
 import { useDispatch } from "react-redux";
 import { useSelector } from "react-redux";
-import { setAddMessageSuccess, setUpdateNewMessageTextSuccess } from "../../redux/dialog_reduser";
+import { actions } from "../../redux/dialog_reduser";
 import { withRedirect } from "../hoc/withRedirect";
 import style from "./Dialog.module.css";
 import DialogItems from "./DialogData/DialogData";
 import Messanges from "./MessegesData/MessegesData";
+import {AppStateType} from "../../redux/store";
 
-const Dialog = (props) => {
-  const dialogData = useSelector(state => state.dialogReduser.dialogData)
-  const newMessageText = useSelector(state => state.dialogReduser.newMessageText)
-  const messagesData = useSelector(state => state.dialogReduser.messagesData)
+const Dialog : FC = () => {
+  const dialogData = useSelector((state: AppStateType) => state.dialogReduser.dialogData)
+  const newMessageText = useSelector((state: AppStateType) => state.dialogReduser.newMessageText)
+  const messagesData = useSelector((state: AppStateType) => state.dialogReduser.messagesData)
   const dispatch = useDispatch()
 
   let dialogsElements = dialogData.map((el) => (
@@ -21,12 +22,12 @@ const Dialog = (props) => {
     <Messanges sms={el.message} />
   ));
 
-const onChangeNewMessange = (event) =>{
-  return dispatch(setUpdateNewMessageTextSuccess(event.target.value))
+const onChangeNewMessange = (event: ChangeEvent<HTMLTextAreaElement>) =>{
+  return dispatch(actions.setUpdateNewMessageTextSuccess(event.target.value))
 }
 
 const onAddMessage = () =>{
-  return dispatch(setAddMessageSuccess())
+  return dispatch(actions.setAddMessageSuccess())
 }
 
   return (

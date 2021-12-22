@@ -1,26 +1,27 @@
-import React from "react";
+import React, {ChangeEvent, FC} from "react";
 import Post from "./Post/Post";
 import style from "./MyPost.module.css";
 import { useSelector } from "react-redux";
 import { useDispatch } from "react-redux";
-import { setAddPostSuccess, setChangeNewTextSuccess } from "../../../redux/profile_reduser";
+import { actions } from "../../../redux/profile_reduser";
+import {AppStateType} from "../../../redux/store";
 
 
 
-const MyPost = (props) => {
-  const postData = useSelector(state => state.profileReduser.postData)
-  const newText = useSelector(state => state.profileReduser.newPostText)
+const MyPost : FC = () => {
+  const postData = useSelector((state:AppStateType) => state.profileReduser.postData)
+  const newText = useSelector((state:AppStateType) => state.profileReduser.newPostText)
   const dispatch = useDispatch()
 
   const onAddPost = () => {
-    dispatch(setAddPostSuccess());
+    dispatch(actions.setAddPostSuccess());
   };
   let postDataElements = postData.map((el) => (
     <Post key={el.id} text={el.text} col={el.likesCount} />
   ));
 
-  const onChangeNewText = (event) => {
-    dispatch(setChangeNewTextSuccess(event.target.value))
+  const onChangeNewText = (event: ChangeEvent<HTMLTextAreaElement>) => {
+    dispatch(actions.setChangeNewTextSuccess(event.target.value))
   };
 
   return (

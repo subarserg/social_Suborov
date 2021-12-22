@@ -1,16 +1,17 @@
-import React, { useState } from "react";
+import React, {FC, useState} from "react";
 import { useEffect } from "react";
 import { useDispatch } from "react-redux";
 import { useSelector } from "react-redux";
 import { getStatusUserThunk, putStatusUserThunk } from "../../../redux/profile_reduser";
+import {AppStateType} from "../../../redux/store";
 
 
 
-const ProfileStatus = (props) => {
-    const status = useSelector((state)=>state.profileReduser.status)
+const ProfileStatus : FC<PropsType> = ({userId}) => {
+    const status = useSelector((state:AppStateType) => state.profileReduser.status)
     const dispatch = useDispatch()
-    let [addStatus,  setAddStatus] = useState(false)
-    let [newStatus, setNewStatus] = useState(status)
+    let [addStatus,  setAddStatus] = useState<boolean>(false)
+    let [newStatus, setNewStatus] = useState<string>(status)
 
     const onAddStatus = () => {
         setAddStatus(true)
@@ -23,8 +24,8 @@ const ProfileStatus = (props) => {
         setNewStatus(e.target.value)
     }
     useEffect(()=>{
-        dispatch(getStatusUserThunk(props.userId || `21028`))
-    },[props.userId, dispatch])
+        dispatch(getStatusUserThunk(userId || 21028))
+    },[userId, dispatch])
     return (
         <div>
             { addStatus ? <div><input autoFocus={true} value={newStatus} onChange={onChangeStatus} type="text" onBlur={onBlurAddStatus} /></div>
@@ -34,5 +35,8 @@ const ProfileStatus = (props) => {
        
     )
 }
-
 export default ProfileStatus
+
+type PropsType = {
+    userId: number
+}

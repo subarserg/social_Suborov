@@ -1,22 +1,23 @@
-import React, { useEffect } from "react";
+import React, {FC, useEffect} from "react";
 import { useSelector } from "react-redux";
 import { useDispatch } from "react-redux";
 import { NavLink } from "react-router-dom";
 import {deleteLoginThunk, getAuthUserThunk} from "../../redux/auth_reduser";
 import style from "./Header.module.css";
 import {Button} from "antd";
+import {AppStateType} from "../../redux/store";
 
-const Header = () => {
-  const login = useSelector((state) => state.authReduser.login);
-  const isAuth = useSelector((state) => state.authReduser.isAuth);
+const Header : FC = () => {
+  const login = useSelector((state:AppStateType) => state.authReduser.login);
+  const isAuth = useSelector((state:AppStateType) => state.authReduser.isAuth);
   const dispatch = useDispatch();
 
   useEffect(() => {
     dispatch(getAuthUserThunk())
   }, [dispatch]);
 
-  const onLogOut = () => {
-      dispatch(deleteLoginThunk())
+  const onLogOut = async () => {
+       await dispatch(deleteLoginThunk())
   }
 
   return (

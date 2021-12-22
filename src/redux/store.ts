@@ -1,5 +1,5 @@
-import { applyMiddleware, combineReducers, createStore } from "redux"
-import thunk from "redux-thunk"
+import {Action, applyMiddleware, combineReducers, createStore} from "redux"
+import thunk, {ThunkAction} from "redux-thunk"
 import dialogReduser from "./dialog_reduser"
 import profileReduser from "./profile_reduser"
 import usersReduser from "./users_reduser"
@@ -14,11 +14,10 @@ const redusers = combineReducers({
 
 
 type StoreType = typeof redusers
+export type AppStateType = ReturnType<StoreType>
 
-export type AppStoreType = ReturnType<StoreType>
-
-type PropertiesTypes<T> = T extends {[key: string]: infer U} ? U : never
-
-export type InferActionsTypes<T extends {[key: string]: (...args: any[])=>any}> = ReturnType<PropertiesTypes<T>>
+export type InferActionType<T> = T extends {[key : string]: (...arg: any[])=> infer U} ? U : never
+export type BaseThunkType<A extends Action, P = Promise<void>> = ThunkAction<P, AppStateType, unknown, A>
 
 export default createStore(redusers, applyMiddleware(thunk))
+

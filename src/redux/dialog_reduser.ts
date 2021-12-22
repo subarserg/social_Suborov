@@ -1,7 +1,4 @@
-import {InferActionsTypes} from "./store";
-
-const UPDATE_NEW_MESSAGE_TEXT = `dialog/Sergey_Suborov/UPDATE_NEW_MESSAGE_TEXT`;
-const ADD_MESSAGE = `dialog/Sergey_Suborov/ADD_MESSAGE`;
+import {InferActionType} from "./store";
 
 const defaultState = {
     dialogData: [
@@ -19,27 +16,16 @@ const defaultState = {
     newMessageText: "",
   }
 
-  type DialogTypes = {
-  id: number
-  name: string
-}
 
-  type MessageTypes = {
-    id: number
-    message: string
-  }
-
-  type DefaultStateType = typeof defaultState
-
-const dialogReduser = (state=defaultState, action: ActionsTypes): DefaultStateType  => {
+const dialogReduser = (state=defaultState, action: ActionType): DefaultStateType  => {
 
   switch (action.type) {
-    case UPDATE_NEW_MESSAGE_TEXT:
+    case "dialog/Sergey_Suborov/UPDATE_NEW_MESSAGE_TEXT":
       return {
         ...state,
         newMessageText: action.newMessage
       };
-    case ADD_MESSAGE:
+    case "dialog/Sergey_Suborov/ADD_MESSAGE":
       let mess = {
         id: 4,
         message: state.newMessageText,
@@ -54,13 +40,24 @@ const dialogReduser = (state=defaultState, action: ActionsTypes): DefaultStateTy
   }
 };
 
-type ActionsTypes = InferActionsTypes<typeof actions>
 
 export const actions = {
-  setUpdateNewMessageTextSuccess: (text: string) => ({type: UPDATE_NEW_MESSAGE_TEXT, newMessage: text } as const),
-  setAddMessageSuccess: () => ({type: ADD_MESSAGE } as const)
+  setUpdateNewMessageTextSuccess: (text: string) => ({type: `dialog/Sergey_Suborov/UPDATE_NEW_MESSAGE_TEXT`, newMessage: text } as const),
+  setAddMessageSuccess: () => ({type: `dialog/Sergey_Suborov/ADD_MESSAGE` } as const)
 }
 
-
-
 export default dialogReduser;
+
+
+
+
+type DialogTypes = {
+  id: number
+  name: string
+}
+type MessageTypes = {
+  id: number
+  message: string
+}
+type DefaultStateType = typeof defaultState
+type ActionType = InferActionType<typeof actions>

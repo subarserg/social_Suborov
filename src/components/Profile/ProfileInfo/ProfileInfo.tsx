@@ -4,10 +4,11 @@ import { getProfileUsersThunk } from "../../../redux/profile_reduser";
 import style from './ProfileInfo.module.css'
 import ProfileStatus from "./ProfileStatus";
 import {useRouteMatch} from "react-router-dom";
+import {AppStateType} from "../../../redux/store";
 
 
-const ProfileInfo = (props) => {
-  const profile = useSelector((state)=>state.profileReduser.profile)
+const ProfileInfo = () => {
+  const profile = useSelector((state:AppStateType)=>state.profileReduser.profile)
   const dispatch = useDispatch()
   const match = useRouteMatch()
   

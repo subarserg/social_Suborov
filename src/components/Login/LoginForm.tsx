@@ -1,18 +1,14 @@
-import React from "react";
-import { Formik } from 'formik'
-import { Form, Input, Checkbox, SubmitButton } from 'formik-antd'
+import React, {FC} from "react";
+import {Formik} from 'formik'
+import {Form, Input, Checkbox, SubmitButton} from 'formik-antd'
 import {useDispatch} from "react-redux";
 import {postIsLoginThunk} from "../../redux/auth_reduser";
 
-const LoginForm = () => {
-    const dispatch =  useDispatch()
-
-
-    const onLoginForm = (values) => {
+const LoginForm : FC = () => {
+    const dispatch = useDispatch()
+    const onLoginForm = (values: FormType) => {
         dispatch(postIsLoginThunk(values))
-
     }
-
     return (
         <Formik initialValues={{email: ``, password: ``, rememberMe: false}} onSubmit={onLoginForm}>
             <Form>
@@ -34,5 +30,10 @@ const LoginForm = () => {
         </Formik>
     )
 }
-
 export default LoginForm
+
+type FormType = {
+    email: string
+    password: string
+    rememberMe: boolean
+}
