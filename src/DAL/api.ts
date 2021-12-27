@@ -23,6 +23,17 @@ export const getStatusUser = (userId: number) => instanse.get<string>(`profile/s
 
 export const putStatusUser = (status: string) => instanse.put<ApiResponseType>(`profile/status/`, {status: status}).then(response => response.data)
 
+export const putUploadAvatar = (avatar: File ) => {
+    const formData = new FormData()
+    formData.append("image", avatar)
+    return instanse.put<ApiResponseType<UserPhotoType>>(`profile/photo/`, formData, {
+    headers: {
+        "Content-Type": "multipart/form-data"
+    }
+}).then(response => response.data)
+}
+
+
 export const postIsLogin = (loginData: LoginDataType) => instanse.post<ApiResponseType<PostIsLoginType>>(`auth/login/`, {
     email: loginData.email,
     password: loginData.password,
@@ -30,6 +41,8 @@ export const postIsLogin = (loginData: LoginDataType) => instanse.post<ApiRespon
 }).then(response => response.data)
 
 export const deleteLogin = () => instanse.delete<ApiResponseType>(`auth/login/`).then(response => response.data)
+
+
 
 type LoginDataType = {
     email: string
@@ -58,7 +71,7 @@ export type UserType = {
     followed: boolean
 }
 
-type UserPhotoType = {
+export type UserPhotoType = {
     small: string
     large: string
 }

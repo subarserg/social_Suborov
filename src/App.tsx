@@ -1,29 +1,32 @@
 import React from "react";
-import { Route } from "react-router-dom";
+
 import "./App.css";
 import 'formik-antd/es/input/style';
 import 'antd/dist/antd.css';
 import Dialog from "./components/Dialog/Dialog";
 import Footer from "./components/Footer/Footer";
 import Header from "./components/Header/Header";
-import Login from "./components/Login/login";
 import NavBar from "./components/NavBar/NavBar";
 import Profile from "./components/Profile/Profile";
 import Users from "./components/Users/Users";
+import {FC} from "react";
+import {Route} from "react-router-dom";
+import {Login} from "./components/Login/login";
 
-const App = (props) => {
+const App : FC = () => {
   return (
       <div className="app-wraper">
         <Header />
         <NavBar />
         <div className="app-wraper-content">
-          <Route path="/profile/:userId?" render={() => <Profile /> } />
-          <Route
-            path="/dialog"
-            render={() => <Dialog />}
-          />
-          <Route path="/users" render={() => <Users />} />
-          <Route path="/login" render={()=> <Login />} />
+            {/* @ts-ignore */}
+          <Route path="/profile/:userId?"  render = { ()=> <Profile /> } />
+            {/* @ts-ignore */}
+          <Route path="/dialog" render= { ()=> <Dialog /> } />
+            {/* @ts-ignore */}
+          <Route path="/users" render= { ()=> <Users /> }/>
+            {/* @ts-ignore */}
+          <Route path="/login" render= { ()=> <Login /> }/>
         </div>
         <Footer />
       </div>

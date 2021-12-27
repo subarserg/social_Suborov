@@ -1,10 +1,11 @@
-import React, {ChangeEvent, FC} from "react";
+import * as React from "react";
 import Post from "./Post/Post";
 import style from "./MyPost.module.css";
 import { useSelector } from "react-redux";
 import { useDispatch } from "react-redux";
 import { actions } from "../../../redux/profile_reduser";
 import {AppStateType} from "../../../redux/store";
+import {ChangeEvent, FC} from "react";
 
 
 

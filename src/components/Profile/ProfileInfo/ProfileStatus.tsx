@@ -1,5 +1,5 @@
-import React, {FC, useState} from "react";
-import { useEffect } from "react";
+import React from "react";
+import {ChangeEvent, FC, useEffect, useState} from "react";
 import { useDispatch } from "react-redux";
 import { useSelector } from "react-redux";
 import { getStatusUserThunk, putStatusUserThunk } from "../../../redux/profile_reduser";
@@ -20,7 +20,7 @@ const ProfileStatus : FC<PropsType> = ({userId}) => {
         setAddStatus(false)
         dispatch(putStatusUserThunk(newStatus))
     }
-    const onChangeStatus = (e) => {
+    const onChangeStatus = (e : ChangeEvent<HTMLInputElement>) => {
         setNewStatus(e.target.value)
     }
     useEffect(()=>{

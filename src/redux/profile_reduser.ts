@@ -1,4 +1,11 @@
-import {getProfileUsers, GetProfileUsersType, getStatusUser, putStatusUser} from "../DAL/api";
+import {
+  getProfileUsers,
+  GetProfileUsersType,
+  getStatusUser,
+  putStatusUser,
+  putUploadAvatar, ResultCodeEnum,
+  UserPhotoType
+} from "../DAL/api";
 import {BaseThunkType, InferActionType} from "./store";
 
 const defaultState = {
@@ -44,6 +51,15 @@ const profileReduser = (state = defaultState, action : ActionTypes) : DefaultSta
         status : action.status,
       }
     }
+    case `profile/Sergey_Suborov/UPLOAD_AVATAR`: {
+      return {
+        ...state,
+        profile : {
+          ...state.profile,
+          photos: action.avatar
+        } as GetProfileUsersType,
+      }
+    }
     default:
       return state;
   }
@@ -53,7 +69,8 @@ export const actions = {
   setAddPostSuccess: () => ({type: `profile/Sergey_Suborov/ADD-POST`} as const),
   setChangeNewTextSuccess: (text: string) => ({type: `profile/Sergey_Suborov/UPDATE-NEW-POST-TEXT`, text} as const),
   setProfileSuccess: (profile: GetProfileUsersType) => ({type: `profile/Sergey_Suborov/GET_PROFILE`, profile} as const),
-  setStatusSuccess: (status: string) => ({type: `profile/Sergey_Suborov/GET_STATUS`, status} as const)
+  setStatusSuccess: (status: string) => ({type: `profile/Sergey_Suborov/GET_STATUS`, status} as const),
+  putUploadAvatarSuccess: ( avatar : UserPhotoType ) => ({type: `profile/Sergey_Suborov/UPLOAD_AVATAR`, avatar} as const)
 }
 
 
@@ -78,9 +95,21 @@ export const getStatusUserThunk = (userId: number) : ThunkTypes => async (dispat
 export const putStatusUserThunk = (status: string) : ThunkTypes => async (dispatch) => {
   try {
     let data = await putStatusUser(status)
-    if(data.resultCode === 0){
+    if(data.resultCode === ResultCodeEnum.Success){
       dispatch(actions.setStatusSuccess(status))
     }
+  }catch (e) {
+    console.log(e)
+  }
+}
+
+export const putUploadAvatarThunk = (avatar : File) : ThunkTypes => async (dispatch ) => {
+  try {
+    let data = await putUploadAvatar(avatar)
+    if(data.resultCode === ResultCodeEnum.Success){
+      dispatch(actions.putUploadAvatarSuccess(data.data))
+    }
+
   }catch (e) {
     console.log(e)
   }

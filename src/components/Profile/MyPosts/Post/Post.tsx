@@ -1,5 +1,6 @@
-import React, {FC} from "react";
+import * as React from "react";
 import style from './Post.module.css'
+import {FC} from "react";
 
 const Post : FC<PropsType> = ({text,col}) => {
    return (

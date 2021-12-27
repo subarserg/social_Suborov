@@ -1,51 +1,50 @@
-import React, { useState } from "react";
+import * as React from "react";
 import { useDispatch } from "react-redux";
 import { NavLink } from "react-router-dom";
 import {
   deleteFollowUserThunk, onFollowClickThunk,
-  setFollowSuccess,
 } from "../../redux/users_reduser";
 import imgAva from "./../../assets/images/images.png";
 import style from "./Users.module.css";
+import {UserType} from "../../DAL/api";
+import {FC, useState} from "react";
 
-const User = (props) => {
+const User : FC<PropsType> = ({user}) => {
   const dispatch = useDispatch();
 
-  let [buttonInProgress, setButtonInProgres] = useState(false);
+  let [buttonInProgress, setButtonInProgres] = useState<boolean>(false);
 
-  const followUnfollwFlow = (dispatch, thunk) => {
+  const onUnfollowClick = async () => {
     setButtonInProgres(true);
+   await dispatch(deleteFollowUserThunk(user.id));
     setButtonInProgres(false);
-  }
-
-  const onUnfollowClick = () => {
-    followUnfollwFlow(dispatch(deleteFollowUserThunk(props.user.id)));
   };
 
-  const onFollowClick = () => {
-    followUnfollwFlow(dispatch(onFollowClickThunk(props.user.id)));
+  const onFollowClick = async () => {
+    setButtonInProgres(true);
+   await dispatch(onFollowClickThunk(user.id));
+    setButtonInProgres(false);
   };
-
   return (
     <div>
       <div>
         <div className={style.name}>
-          <span>MY NAME IS: {props.user.name}</span>
+          <span>MY NAME IS: {user.name}</span>
         </div>
         <div>
-          <NavLink to={`profile/` + props.user.id}>
+          <NavLink to={`profile/` + user.id}>
             <img
               className={style.imgAva}
               src={
-                props.user.photos.small === null
+                user.photos.small === null
                   ? imgAva
-                  : props.user.photos.small
+                  : user.photos.small
               }
               alt="noPhoto"
             />
           </NavLink>
         </div>
-        {props.user.followed ? (
+        {user.followed ? (
           <div>
             <button disabled={buttonInProgress} onClick={onUnfollowClick}>
               UNFOLLOW
@@ -62,11 +61,11 @@ const User = (props) => {
       <div>
         <span>
           MY STATUS:{" "}
-          {props.user.name === "subar"
+          {user.name === "subar"
             ? "I am BOSS"
-            : props.user.status === null
+            : user.status === null
             ? "вы лошары"
-            : props.user.status}
+            : user.status}
         </span>
       </div>
       <div>
@@ -82,3 +81,7 @@ const User = (props) => {
 };
 
 export default User;
+
+type PropsType = {
+  user: UserType
+}

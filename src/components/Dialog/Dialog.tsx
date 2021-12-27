@@ -1,4 +1,4 @@
-import React, {ChangeEvent, FC} from "react";
+import * as React from "react";
 import { useDispatch } from "react-redux";
 import { useSelector } from "react-redux";
 import { actions } from "../../redux/dialog_reduser";
@@ -7,6 +7,7 @@ import style from "./Dialog.module.css";
 import DialogItems from "./DialogData/DialogData";
 import Messanges from "./MessegesData/MessegesData";
 import {AppStateType} from "../../redux/store";
+import {ChangeEvent, FC} from "react";
 
 const Dialog : FC = () => {
   const dialogData = useSelector((state: AppStateType) => state.dialogReduser.dialogData)

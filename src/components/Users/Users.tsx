@@ -1,4 +1,4 @@
-import React, { useEffect } from "react";
+import * as React from "react";
 import { useDispatch } from "react-redux";
 import { useSelector } from "react-redux";
 import {
@@ -14,8 +14,9 @@ import {
   getTotalUsersSelector,
   getUsersSelector
 } from "../../redux/Selectors/user_selector";
+import {FC, useEffect} from "react";
 
-const Users = () => {
+const Users : FC = () => {
   const users = useSelector(getUsersSelector);
   const pageSize = useSelector(getPageSizeSelector);
   const totalUsersCount = useSelector(getTotalUsersSelector);
@@ -30,7 +31,7 @@ const Users = () => {
     }
   }, [dispatch, carentPage, pageSize, users]);
 
-  const onSetCarentPageSuccess = (carentPage) => {
+  const onSetCarentPageSuccess = (carentPage : number) => {
     dispatch(getUsers2Thunk(carentPage))
   };
 

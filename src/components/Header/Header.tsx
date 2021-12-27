@@ -1,11 +1,13 @@
-import React, {FC, useEffect} from "react";
+import React from "react";
 import { useSelector } from "react-redux";
 import { useDispatch } from "react-redux";
 import { NavLink } from "react-router-dom";
 import {deleteLoginThunk, getAuthUserThunk} from "../../redux/auth_reduser";
 import style from "./Header.module.css";
-import {Button} from "antd";
+import {Button} from "antd"
+
 import {AppStateType} from "../../redux/store";
+import {FC, useEffect} from "react";
 
 const Header : FC = () => {
   const login = useSelector((state:AppStateType) => state.authReduser.login);
@@ -24,9 +26,8 @@ const Header : FC = () => {
     <header className={style.header}>
       <img
         src="https://w7.pngwing.com/pngs/995/548/png-transparent-superman-logo-superman-logo-superhero-superman-heroes-triangle-heart-thumbnail.png"
-        alt=""
-      ></img>
-
+        alt="NoPhoto"
+      />
       <div className={style.loginBlock}>
         {isAuth
             ? <div>

@@ -19,7 +19,6 @@ const defaultState = {
 it("test add post", () => {
   let state = profileReduser(defaultState, setAddPostSuccess())
   expect(state.postData.length).toBe(4)
-
 })
 
 it("test update new post text", () => {
