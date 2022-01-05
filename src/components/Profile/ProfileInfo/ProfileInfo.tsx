@@ -8,7 +8,7 @@ import {AppStateType} from "../../../redux/store";
 import {ChangeEvent, useEffect} from "react";
 import {Button, Upload, message} from "antd";
 import {UploadOutlined} from "@ant-design/icons";
-import { UploadRequestOption } from 'rc-upload/es/interface.d.ts';
+import { UploadRequestOption } from 'rc-upload/es/interface';
 
 
 const ProfileInfo = () => {
@@ -26,6 +26,7 @@ const ProfileInfo = () => {
 
 
     const uploadAvatar = (options : UploadRequestOption<any>) => {
+
         dispatch(putUploadAvatarThunk(options.file))
     }
 
@@ -52,10 +53,4 @@ const ProfileInfo = () => {
 
 export default ProfileInfo
 
-/*lastModified: 1622452517753
-lastModifiedDate: Mon May 31 2021 12:15:17 GMT+0300 (Москва, стандартное время) {}
-name: "vk_com_oboihd_16803.jpg"
-size: 796650
-type: "image/jpeg"
-webkitRelativePath: ""*/
 

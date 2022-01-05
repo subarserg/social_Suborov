@@ -5,7 +5,7 @@ const defaultState = {
   users: [] as Array<UserType>,
   pageSize: 10,
   totalUsersCount: 50,
-  carentPage: 2,
+  carentPage: 1,
   isPreloader: false
 };
 
@@ -52,6 +52,11 @@ const usersReduser = (state = defaultState, action: ActionType) : DefaultStateTy
         ...state,
         isPreloader: action.isPreloader
       };
+    case `users/Sergey_Suborov/PAGE_SIZE`:
+      return {
+        ...state,
+        pageSize: action.pageSize,
+      };
     default:
       return state;
   }
@@ -63,7 +68,9 @@ export const actions = {
   setUsersSuccess: (users: Array<UserType>) => ({type: `users/Sergey_Suborov/SET_USERS`, users} as const),
   setCarentPageSuccess: (carentPage: number) => ({type: `users/Sergey_Suborov/SET_CARENT_PAGE`, carentPage} as const),
   setTotalUsersCountSuccess: (totalCount: number) => ({type: `users/Sergey_Suborov/SET_TOTAL_USERS_COUNT`, totalCount} as const),
-  setIspreloader: (isPreloader: boolean) => ({type: `users/Sergey_Suborov/SET_IS_PRELOADER`, isPreloader} as const)
+  setIspreloader: (isPreloader: boolean) => ({type: `users/Sergey_Suborov/SET_IS_PRELOADER`, isPreloader} as const),
+  setPageSizeSuccess: (pageSize: number) => ({type: `users/Sergey_Suborov/PAGE_SIZE`, pageSize} as const),
+
 }
 
 
@@ -73,23 +80,13 @@ export const getUsersThunk = (carentPage : number, pageSize : number) : ThunkTyp
     let data = await getUsers(carentPage, pageSize)
     dispatch(actions.setUsersSuccess(data.items));
     dispatch(actions.setTotalUsersCountSuccess(data.totalCount));
+    dispatch(actions.setCarentPageSuccess(carentPage));
     dispatch(actions.setIspreloader(false))
   }catch (e) {
     console.log(e)
   }
 }
 
-export const getUsers2Thunk = (carentPage: number) : ThunkType => async (dispatch) => {
-  try {
-    dispatch(actions.setCarentPageSuccess(carentPage));
-    dispatch(actions.setIspreloader(true))
-    let data = await getUsers(carentPage, 10)
-    dispatch(actions.setUsersSuccess(data.items));
-    dispatch(actions.setIspreloader(false))
-  }catch (e) {
-    console.log(e)
-  }
-}
 
 export const deleteFollowUserThunk = (userId: number) : ThunkType => async (dispatch) => {
   try {

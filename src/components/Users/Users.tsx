@@ -1,13 +1,12 @@
-import * as React from "react";
+import React from "react";
 import { useDispatch } from "react-redux";
 import { useSelector } from "react-redux";
 import {
-  getUsers2Thunk,
+  actions,
   getUsersThunk,
 } from "../../redux/users_reduser";
 import { withRedirect } from "../hoc/withRedirect";
 import User from "./User";
-import style from "./Users.module.css";
 import {
   getCarentPageSelector,
   getIsPreloaderSelector, getPageSizeSelector,
@@ -15,6 +14,7 @@ import {
   getUsersSelector
 } from "../../redux/Selectors/user_selector";
 import {FC, useEffect} from "react";
+import Paginations from "./Paginator";
 
 const Users : FC = () => {
   const users = useSelector(getUsersSelector);
@@ -31,32 +31,25 @@ const Users : FC = () => {
     }
   }, [dispatch, carentPage, pageSize, users]);
 
-  const onSetCarentPageSuccess = (carentPage : number) => {
-    dispatch(getUsers2Thunk(carentPage))
+  const onSetCarentPageSuccess = (carentPage : number, pageSize: number) => {
+    dispatch(getUsersThunk(carentPage, pageSize))
   };
 
-  let pagesCount = Math.ceil(totalUsersCount / pageSize);
-  let pages = [];
-  for (let i = 1; i <= pagesCount; i++) {
-    pages.push(i);
-  }
+  const onSetPageSize = (size: number) => {
+    dispatch(actions.setPageSizeSuccess(size))
+  };
+
+
   if(isPreloader){
     return <div>LOADING...</div>
   }
   return (
     <div>
-      <div>
-        {pages.map((p) => (
-          <span key={p}
-            className={carentPage === p ? style.selectPage : ``}
-            onClick={(e) => {
-              onSetCarentPageSuccess(p);
-            }}
-          >
-            {p}
-          </span>
-        ))}
-      </div>
+      <Paginations totalCount={totalUsersCount}
+                   pageSize={pageSize}
+                   carentPage={carentPage}
+                   setCarentPage={onSetCarentPageSuccess}
+                   setPageSize={onSetPageSize} />
       {users.map((user) => (
         <User user={user} key={user.id} />
       ))}

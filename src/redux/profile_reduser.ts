@@ -7,6 +7,7 @@ import {
   UserPhotoType
 } from "../DAL/api";
 import {BaseThunkType, InferActionType} from "./store";
+import { BeforeUploadFileType, RcFile} from 'rc-upload/es/interface';
 
 const defaultState = {
   postData: [
@@ -103,8 +104,9 @@ export const putStatusUserThunk = (status: string) : ThunkTypes => async (dispat
   }
 }
 
-export const putUploadAvatarThunk = (avatar : File) : ThunkTypes => async (dispatch ) => {
+export const putUploadAvatarThunk = (avatar: Exclude<BeforeUploadFileType, File | boolean> | RcFile) : ThunkTypes => async (dispatch ) => {
   try {
+    // @ts-ignore
     let data = await putUploadAvatar(avatar)
     if(data.resultCode === ResultCodeEnum.Success){
       dispatch(actions.putUploadAvatarSuccess(data.data))
