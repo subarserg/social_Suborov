@@ -1,4 +1,5 @@
 import axios from "axios";
+import {putProfileInfoThunk} from "../redux/profile_reduser";
 
 const instanse = axios.create({
     baseURL: `https://social-network.samuraijs.com/api/1.0/`,
@@ -32,6 +33,8 @@ export const putUploadAvatar = (avatar: File ) => {
     }
 }).then(response => response.data)
 }
+
+export const putProfileInfo =(profile: GetProfileUsersType) => instanse.put<ApiResponseType>(`profile/`, profile).then(response => response.data)
 
 
 export const postIsLogin = (loginData: LoginDataType) => instanse.post<ApiResponseType<PostIsLoginType>>(`auth/login/`, {
@@ -81,11 +84,12 @@ export type GetProfileUsersType = {
     lookingForAJob: boolean
     lookingForAJobDescription: string
     fullName: string
+    aboutMe: string
     contacts: ProfileContactsType
     photos: UserPhotoType
 }
 
-type ProfileContactsType = {
+export type ProfileContactsType = {
     github: string
     vk: string
     facebook: string

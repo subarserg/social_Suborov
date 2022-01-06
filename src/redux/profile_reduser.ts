@@ -1,7 +1,7 @@
 import {
   getProfileUsers,
   GetProfileUsersType,
-  getStatusUser,
+  getStatusUser, putProfileInfo,
   putStatusUser,
   putUploadAvatar, ResultCodeEnum,
   UserPhotoType
@@ -112,6 +112,18 @@ export const putUploadAvatarThunk = (avatar: Exclude<BeforeUploadFileType, File 
       dispatch(actions.putUploadAvatarSuccess(data.data))
     }
 
+  }catch (e) {
+    console.log(e)
+  }
+}
+
+export const putProfileInfoThunk = (profile: GetProfileUsersType) : ThunkTypes => async (dispatch, getState) => {
+  try {
+    let userId = getState().authReduser.userId
+    let data = await putProfileInfo(profile)
+    if(data.resultCode === ResultCodeEnum.Success){
+      if(userId) await dispatch(getProfileUsersThunk(userId))
+    }
   }catch (e) {
     console.log(e)
   }
