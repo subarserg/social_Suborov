@@ -1,18 +1,21 @@
 import React from "react";
 import {Formik} from 'formik'
 import {Form, Input, Checkbox, SubmitButton} from 'formik-antd'
-import {useDispatch} from "react-redux";
+import {useDispatch, useSelector} from "react-redux";
 import {postIsLoginThunk} from "../../redux/auth_reduser";
 import {FC} from "react";
+import {Image} from "antd";
+import {getCaptchaUrlSelector} from "../../redux/Selectors/auth_selector";
 
 const LoginForm : FC = () => {
     const dispatch = useDispatch()
     const onLoginForm = (values: FormType) => {
         dispatch(postIsLoginThunk(values))
     }
+    const captchaUrl = useSelector(getCaptchaUrlSelector)
 
     return (
-        <Formik initialValues={{email: ``, password: ``, rememberMe: false}} onSubmit={onLoginForm}>
+        <Formik initialValues={{email: ``, password: ``, rememberMe: false, captcha: ""}} onSubmit={onLoginForm}>
             <Form>
                 {/* @ts-ignore */}
                 <Input name='email' placeholder='Email' rules={[
@@ -29,15 +32,22 @@ const LoginForm : FC = () => {
                     },
                 ]}/>
                 <Checkbox name='rememberMe'>Remember Me</Checkbox>
-                <SubmitButton>Login</SubmitButton>
+                {
+                    captchaUrl && <>
+                        <Image src={captchaUrl} alt="no photo"/>
+                        <Input name='captcha' />
+                    </>
+                }
+                <SubmitButton  disabled={false} >Login</SubmitButton>
             </Form>
         </Formik>
     )
 }
 export default LoginForm
 
-type FormType = {
+export type FormType = {
     email: string
     password: string
     rememberMe: boolean
+    captcha: string
 }

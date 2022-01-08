@@ -1,7 +1,7 @@
 import {
   getProfileUsers,
   GetProfileUsersType,
-  getStatusUser, putProfileInfo,
+  getStatusUser, getWeatherTemp, putProfileInfo,
   putStatusUser,
   putUploadAvatar, ResultCodeEnum,
   UserPhotoType
@@ -17,7 +17,8 @@ const defaultState = {
   ] as Array<PostDataTypes>,
   newPostText: "",
   profile: null as null | GetProfileUsersType,
-  status: ``
+  status: ``,
+  weatherWiget: null as null | WeatherType
 };
 
 
@@ -71,7 +72,17 @@ export const actions = {
   setChangeNewTextSuccess: (text: string) => ({type: `profile/Sergey_Suborov/UPDATE-NEW-POST-TEXT`, text} as const),
   setProfileSuccess: (profile: GetProfileUsersType) => ({type: `profile/Sergey_Suborov/GET_PROFILE`, profile} as const),
   setStatusSuccess: (status: string) => ({type: `profile/Sergey_Suborov/GET_STATUS`, status} as const),
-  putUploadAvatarSuccess: ( avatar : UserPhotoType ) => ({type: `profile/Sergey_Suborov/UPLOAD_AVATAR`, avatar} as const)
+  putUploadAvatarSuccess: ( avatar : UserPhotoType ) => ({type: `profile/Sergey_Suborov/UPLOAD_AVATAR`, avatar} as const),
+  setWeatherTempSuccess:
+}
+
+export const getWeatherTempThunk = (cityName: string) : ThunkTypes => async (dispatch) => {
+  try {
+    let data = await getWeatherTemp(cityName)
+    dispatch(actions.setWeatherTempSuccess(data))
+  }catch (e) {
+    console.log(e)
+  }
 }
 
 

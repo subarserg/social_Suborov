@@ -1,31 +1,43 @@
-import {deleteLogin, getAuthUser, postIsLogin} from "../DAL/api";
+import {deleteLogin, getAuthUser, getCaptchaUrl, postIsLogin, ResultCodeCaptchaEnum, ResultCodeEnum} from "../DAL/api";
 import {BaseThunkType, InferActionType} from "./store";
+import {FormType} from "../components/Login/LoginForm";
 
 const defaultState = {
     userId: null as null | number,
     email: null as null | string,
     login: null as null | string,
-    isAuth: false
+    isAuth: false,
+    captchaUrl: null as null | string
 };
 
 
 const authReduser = (state = defaultState, action: ActionTypes): DefaultStateTypes => {
-    switch (action.type) {
-        case `users/Sergey_Suborov/SET_USER_DATA`:
-            return {
-                ...state,
-                ...action.payload,
-                isAuth: action.payload.isAuth
-            };
-        default:
-            return state;
+        switch (action.type) {
+            case `users/Sergey_Suborov/SET_USER_DATA`:
+                return {
+                    ...state,
+                    ...action.payload,
+                    isAuth: action.payload.isAuth
+                }
+            case `users/Sergey_Suborov/SET_CAPTCHA_URL`:
+                return {
+                    ...state,
+                    captchaUrl: action.captchaUrl
+                };
+            default:
+                return state;
+        }
     }
-};
+;
 
 export const actions = {
     setUserDataSuccess: (userId: number | null, email: string | null, login: string | null, isAuth: boolean) => ({
         type: `users/Sergey_Suborov/SET_USER_DATA`,
         payload: {userId, email, login, isAuth},
+    } as const),
+    setCaptchaUrlSuccess: (captchaUrl: string | null) => ({
+        type: `users/Sergey_Suborov/SET_CAPTCHA_URL`,
+        captchaUrl
     } as const)
 }
 
@@ -36,18 +48,32 @@ export const getAuthUserThunk = (): ThunkTypes => async (dispatch) => {
             let {id, email, login} = data.data;
             dispatch(actions.setUserDataSuccess(id, email, login, true));
         }
+    } catch
+        (error) {
+        console.log(error)
+        //todo: обработать ошибки
+    }
+}
+
+
+export const getCaptchaUrlThunk = (): ThunkTypes => async (dispatch) => {
+    try {
+        let data = await getCaptchaUrl()
+        dispatch(actions.setCaptchaUrlSuccess(data.url));
     } catch (error) {
         console.log(error)
         //todo: обработать ошибки
     }
-
 }
 
-export const postIsLoginThunk = (loginData: any): ThunkTypes => async (dispatch) => {
+
+export const postIsLoginThunk = (loginData: FormType): ThunkTypes => async (dispatch) => {
     try {
         let data = await postIsLogin(loginData)
-        if (data.resultCode === 0) {
+        if (data.resultCode === ResultCodeEnum.Success) {
             await dispatch(getAuthUserThunk())
+        } else if (data.resultCode === ResultCodeCaptchaEnum.Captcha) {
+            await dispatch(getCaptchaUrlThunk())
         }
     } catch (error) {
         console.log(error)
