@@ -1,10 +1,10 @@
 import {
   getProfileUsers,
-  GetProfileUsersType,
+  GetProfileUsersType, getRates, GetRatesType,
   getStatusUser, getWeatherTemp, putProfileInfo,
   putStatusUser,
   putUploadAvatar, ResultCodeEnum,
-  UserPhotoType
+  UserPhotoType, WeatherCodeEnum, WeatherType
 } from "../DAL/api";
 import {BaseThunkType, InferActionType} from "./store";
 import { BeforeUploadFileType, RcFile} from 'rc-upload/es/interface';
@@ -18,7 +18,8 @@ const defaultState = {
   newPostText: "",
   profile: null as null | GetProfileUsersType,
   status: ``,
-  weatherWiget: null as null | WeatherType
+  weatherWiget: null as null | WeatherType,
+  rates: null as null | GetRatesType
 };
 
 
@@ -53,6 +54,18 @@ const profileReduser = (state = defaultState, action : ActionTypes) : DefaultSta
         status : action.status,
       }
     }
+    case `profile/Sergey_Suborov/SET_WEATHER_WIGET`: {
+      return {
+        ...state,
+        weatherWiget : action.weatherWiget,
+      }
+    }
+    case `profile/Sergey_Suborov/SET_RATES`: {
+      return {
+        ...state,
+        rates : action.rates,
+      }
+    }
     case `profile/Sergey_Suborov/UPLOAD_AVATAR`: {
       return {
         ...state,
@@ -73,13 +86,26 @@ export const actions = {
   setProfileSuccess: (profile: GetProfileUsersType) => ({type: `profile/Sergey_Suborov/GET_PROFILE`, profile} as const),
   setStatusSuccess: (status: string) => ({type: `profile/Sergey_Suborov/GET_STATUS`, status} as const),
   putUploadAvatarSuccess: ( avatar : UserPhotoType ) => ({type: `profile/Sergey_Suborov/UPLOAD_AVATAR`, avatar} as const),
-  setWeatherTempSuccess:
+  setWeatherTempSuccess: ( weatherWiget : WeatherType ) => ({type: `profile/Sergey_Suborov/SET_WEATHER_WIGET`, weatherWiget} as const),
+  setRatesSuccess: ( rates : GetRatesType ) => ({type: `profile/Sergey_Suborov/SET_RATES`, rates} as const),
 }
+
+
+export const getRatesThunk = () : ThunkTypes => async (dispatch) => {
+  try {
+    let data = await getRates()
+    if (data.success) dispatch(actions.setRatesSuccess(data))
+  }catch (e) {
+    console.log(e)
+  }
+}
+
+
 
 export const getWeatherTempThunk = (cityName: string) : ThunkTypes => async (dispatch) => {
   try {
     let data = await getWeatherTemp(cityName)
-    dispatch(actions.setWeatherTempSuccess(data))
+    if (data.cod === WeatherCodeEnum.Success ) dispatch(actions.setWeatherTempSuccess(data))
   }catch (e) {
     console.log(e)
   }

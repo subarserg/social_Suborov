@@ -4,6 +4,7 @@ import MyPost from "./MyPosts/MyPost";
 import ProfileInfo from "./ProfileInfo/ProfileInfo";
 import {FC} from "react";
 import ProfileWeather from "./ProfileInfo/ProfileWeather";
+import ProfileRates from "./ProfileInfo/ProfileRates";
 
 const Profile: FC = () => {
     return (
@@ -11,6 +12,7 @@ const Profile: FC = () => {
             <ProfileInfo/>
             <MyPost/>
             <ProfileWeather/>
+            <ProfileRates />
         </main>
     );
 };

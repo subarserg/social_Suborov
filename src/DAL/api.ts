@@ -8,16 +8,24 @@ const instanse = axios.create({
     headers: {
         "API-KEY": "c82ee34b-7546-436e-bc1d-d6134a51853a"
     }
-
 })
 
 const instanseWeather = axios.create({
     baseURL: `https://api.openweathermap.org/data/2.5/`
 })
-
 const weatherKey = "43f9c815f1e98b336a9644f9aedc4e4d"
 
-export const getWeatherTemp = (cityName: string) => instanseWeather.get<WeatherType>(`weather?q=${cityName}&appid=${weatherKey}`).then(response => response.data)
+
+
+const instanseRates = axios.create({
+    baseURL: `http://api.exchangeratesapi.io/v1/`
+})
+const ratesKey = "8694cbf57aef009ed0b655888262bdbb"
+
+
+export const getRates = () => instanseRates.get<GetRatesType>(`latest?access_key=${ratesKey}&symbols=USD,AUD,CAD,PLN,BYN`).then(response => response.data)
+
+export const getWeatherTemp = (cityName: string) => instanseWeather.get<WeatherType & WeatherCodeEnum>(`weather?q=${cityName}&appid=${weatherKey}`).then(response => response.data)
 
 
 export const getAuthUser = () => instanse.get<ApiResponseType<GetAuthUserType>>(`auth/me`).then(response => response.data)
@@ -130,6 +138,15 @@ export enum ResultCodeCaptchaEnum {
     Captcha = 10
 }
 
+
+export enum WeatherCodeEnum {
+    Success = 200
+}
+
+
+
+
+
 type  WeatherMainType = {
         temp: number
         grnd_level: number
@@ -151,29 +168,49 @@ type WeatherWindType = {
     speed: number
 }
 
-type WeatherListType = {
-    main: WeatherMainType
-    weather: Array<WeatherListWeatherType>
-    clouds: WeatherCloudsType
-    wind: WeatherWindType
-}
-
 type WeatherCoordType ={
     lat: number
     lon: number
 }
 
-type WeatherCityType = {
+type WeatherSysType = {
+    type: number
     id: number
-    name: string
-    coord: WeatherCoordType
     country: string
+    sunrise: number
+    sunset: number
 }
 
-type WeatherType = {
-    cod: string,
-    list: Array<WeatherListType>
-    city: WeatherCityType
+export type WeatherType = {
+    base: string
+    clouds: WeatherCloudsType
+    cod: number
+    coord: WeatherCoordType
+    dt: number
+    id: number
+    main: WeatherMainType
+    name: string
+    sys: WeatherSysType
+    timezone: number
+    visibility: number
+    weather: Array<WeatherListWeatherType>
+    wind: WeatherWindType
 }
 
+export type RatesType = {
+    USD: number
+    AUD: number
+    CAD: number
+    PLN: number
+    BYN: number
+}
+
+
+export type GetRatesType = {
+    success: boolean
+    timestamp: number
+    base: string
+    date: string
+    rates: RatesType
+}
 
