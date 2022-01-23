@@ -30,11 +30,13 @@ export const getWeatherTemp = (cityName: string) => instanseWeather.get<WeatherT
 
 export const getAuthUser = () => instanse.get<ApiResponseType<GetAuthUserType>>(`auth/me`).then(response => response.data)
 
-export const getUsers = (carentPage: number, pageSize: number) => instanse.get<GetUsersType>(`users?page=${carentPage}&count=${pageSize}`).then(response => response.data)
+export const getUsers = (carentPage: number, pageSize: number, filter: FilterType) => instanse.get<GetUsersType>(`users?page=${carentPage}&count=${pageSize}` +
+    (filter.term.length === 0 ? '' : `&term=${filter.term}`) +
+    (filter.friend === null ? '' : `&friend=${filter.friend}`)).then(response => response.data)
 
-export const postFollowUser = (userID: number) => instanse.post<ApiResponseType>(`follow/${userID}`).then(response => response.data)
+export const postFollowUser = (userID: number | undefined) => instanse.post<ApiResponseType>(`follow/${userID}`).then(response => response.data)
 
-export const deleteFollowUser = (userId: number) => instanse.delete<ApiResponseType>(`follow/${userId}`).then(response => response.data)
+export const deleteFollowUser = (userId: number | undefined) => instanse.delete<ApiResponseType>(`follow/${userId}`).then(response => response.data)
 
 export const getProfileUsers = (userId: number) => instanse.get<GetProfileUsersType>(`profile/${userId}`).then((response) => response.data)
 
@@ -213,4 +215,7 @@ export type GetRatesType = {
     date: string
     rates: RatesType
 }
-
+export type FilterType = {
+    term: string
+    friend: boolean | null
+}

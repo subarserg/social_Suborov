@@ -2,6 +2,7 @@ import * as React from "react";
 import { NavLink } from "react-router-dom";
 import style from './NavBar.module.css'
 import {FC} from "react";
+import MyFriends from "../MyFriends/MyFriends";
 
 const NavBar : FC = () => {
   return (
@@ -12,6 +13,7 @@ const NavBar : FC = () => {
         <div><NavLink to='/news' activeClassName={style.activeLink}>News</NavLink></div>
         <div><NavLink to='/music' activeClassName={style.activeLink}>Music</NavLink></div>
         <div><NavLink to='/settings' activeClassName={style.activeLink}>Settings</NavLink></div>
+        <MyFriends/>
       </div>
   )
 }

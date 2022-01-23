@@ -16,6 +16,7 @@ import {
 import {FC, useEffect} from "react";
 import Paginations from "./Paginator";
 
+
 const Users : FC = () => {
   const users = useSelector(getUsersSelector);
   const pageSize = useSelector(getPageSizeSelector);
@@ -27,12 +28,12 @@ const Users : FC = () => {
 
   useEffect(() => {
     if (users.length === 0) {
-      dispatch(getUsersThunk(carentPage, pageSize))
+      dispatch(getUsersThunk(carentPage, pageSize,{term: "", friend: null}))
     }
   }, [dispatch, carentPage, pageSize, users]);
 
   const onSetCarentPageSuccess = (carentPage : number, pageSize: number) => {
-    dispatch(getUsersThunk(carentPage, pageSize))
+    dispatch(getUsersThunk(carentPage, pageSize, {term: "", friend: null}))
   };
 
   const onSetPageSize = (size: number) => {

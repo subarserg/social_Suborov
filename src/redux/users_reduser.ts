@@ -1,4 +1,4 @@
-import {deleteFollowUser, getUsers, postFollowUser, UserType} from "../DAL/api";
+import {deleteFollowUser, FilterType, getUsers, postFollowUser, UserType} from "../DAL/api";
 import {BaseThunkType, InferActionType} from "./store";
 
 const defaultState = {
@@ -6,7 +6,8 @@ const defaultState = {
   pageSize: 10,
   totalUsersCount: 50,
   carentPage: 1,
-  isPreloader: false
+  isPreloader: false,
+  usersFriends: [] as Array<UserType>
 };
 
 
@@ -57,27 +58,45 @@ const usersReduser = (state = defaultState, action: ActionType) : DefaultStateTy
         ...state,
         pageSize: action.pageSize,
       };
+      case `users/Sergey_Suborov/USERS_FRIENDS`:
+      return {
+        ...state,
+        usersFriends: [...state.usersFriends, ...action.usersFriends]
+      };
     default:
       return state;
   }
 };
 
 export const actions = {
-  setFollowSuccess: (idUser: number) => ({type: `users/Sergey_Suborov/FOLLOW`, idUser} as const),
-  setUnfollowSuccess: (idUser: number) => ({type: `users/Sergey_Suborov/UNFOLLOW`, idUser} as const),
+  setFollowSuccess: (idUser: number | undefined) => ({type: `users/Sergey_Suborov/FOLLOW`, idUser} as const),
+  setUnfollowSuccess: (idUser: number | undefined) => ({type: `users/Sergey_Suborov/UNFOLLOW`, idUser} as const),
   setUsersSuccess: (users: Array<UserType>) => ({type: `users/Sergey_Suborov/SET_USERS`, users} as const),
   setCarentPageSuccess: (carentPage: number) => ({type: `users/Sergey_Suborov/SET_CARENT_PAGE`, carentPage} as const),
   setTotalUsersCountSuccess: (totalCount: number) => ({type: `users/Sergey_Suborov/SET_TOTAL_USERS_COUNT`, totalCount} as const),
   setIspreloader: (isPreloader: boolean) => ({type: `users/Sergey_Suborov/SET_IS_PRELOADER`, isPreloader} as const),
   setPageSizeSuccess: (pageSize: number) => ({type: `users/Sergey_Suborov/PAGE_SIZE`, pageSize} as const),
+  setUserFriendsSuccess: (usersFriends: Array<UserType>) => ({type: `users/Sergey_Suborov/USERS_FRIENDS`, usersFriends} as const),
 
 }
 
-
-export const getUsersThunk = (carentPage : number, pageSize : number) : ThunkType => async (dispatch) => {
+export const  getUserFriendsThunk = (carentPage : number, pageSize : number, filter: FilterType) : ThunkType => async (dispatch) => {
   try {
     dispatch(actions.setIspreloader(true))
-    let data = await getUsers(carentPage, pageSize)
+    let data = await getUsers(carentPage, pageSize,filter)
+    dispatch(actions.setUserFriendsSuccess(data.items));
+    dispatch(actions.setTotalUsersCountSuccess(data.totalCount));
+    dispatch(actions.setIspreloader(false))
+  }catch (e) {
+    console.log(e)
+  }
+}
+
+
+export const getUsersThunk = (carentPage : number, pageSize : number, filter: FilterType) : ThunkType => async (dispatch) => {
+  try {
+    dispatch(actions.setIspreloader(true))
+    let data = await getUsers(carentPage, pageSize,filter)
     dispatch(actions.setUsersSuccess(data.items));
     dispatch(actions.setTotalUsersCountSuccess(data.totalCount));
     dispatch(actions.setCarentPageSuccess(carentPage));
@@ -88,7 +107,7 @@ export const getUsersThunk = (carentPage : number, pageSize : number) : ThunkTyp
 }
 
 
-export const deleteFollowUserThunk = (userId: number) : ThunkType => async (dispatch) => {
+export const deleteFollowUserThunk = (userId: number | undefined) : ThunkType => async (dispatch) => {
   try {
     let data = await deleteFollowUser(userId)
     if (data.resultCode === 0) {
@@ -99,7 +118,7 @@ export const deleteFollowUserThunk = (userId: number) : ThunkType => async (disp
   }
 }
 
-export const onFollowClickThunk = (userId: number) : ThunkType => async (dispatch) => {
+export const onFollowClickThunk = (userId: number | undefined) : ThunkType => async (dispatch) => {
   try {
     let data = await postFollowUser(userId)
     if (data.resultCode === 0) {

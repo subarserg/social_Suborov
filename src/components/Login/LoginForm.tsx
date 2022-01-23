@@ -15,7 +15,7 @@ const LoginForm : FC = () => {
     const captchaUrl = useSelector(getCaptchaUrlSelector)
 
     return (
-        <Formik initialValues={{email: ``, password: ``, rememberMe: false, captcha: ""}} onSubmit={onLoginForm}>
+        <Formik <FormType> initialValues={{email: ``, password: ``, rememberMe: false, captcha: ""}} onSubmit={onLoginForm}>
             <Form>
                 {/* @ts-ignore */}
                 <Input name='email' placeholder='Email' rules={[

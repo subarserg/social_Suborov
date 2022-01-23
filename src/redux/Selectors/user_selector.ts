@@ -5,4 +5,6 @@ export const getPageSizeSelector = (state : AppStateType) => state.usersReduser.
 export const getTotalUsersSelector = (state : AppStateType) => state.usersReduser.totalUsersCount
 export const getIsPreloaderSelector = (state : AppStateType) => state.usersReduser.isPreloader
 export const getCarentPageSelector = (state : AppStateType) => state.usersReduser.carentPage
+export const getUsersFriendsSelector = (state : AppStateType) => state.usersReduser.usersFriends
+
 
