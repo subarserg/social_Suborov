@@ -10,6 +10,7 @@ import Users from "./components/Users/Users";
 import {FC} from "react";
 import {Route} from "react-router-dom";
 import {Login} from "./components/Login/login";
+import Games from "./components/Games/Games";
 
 const App : FC = () => {
   return (
@@ -25,6 +26,8 @@ const App : FC = () => {
           <Route path="/users" render= { ()=> <Users /> }/>
             {/* @ts-ignore */}
           <Route path="/login" render= { ()=> <Login /> }/>
+            {/* @ts-ignore */}
+            <Route path="/games" render= { ()=> <Games /> }/>
         </div>
         <Footer />
       </div>

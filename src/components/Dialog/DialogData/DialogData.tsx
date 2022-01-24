@@ -1,4 +1,4 @@
-import * as React from "react";
+import React from "react";
 import { NavLink } from "react-router-dom";
 import style from "./DialogData.module.css";
 import {FC} from "react";
