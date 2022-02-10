@@ -1,7 +1,7 @@
 import React, {FC, useState} from 'react';
 import {useDispatch} from "react-redux";
 import {Formik} from 'formik'
-import {GetProfileUsersType, ProfileContactsType} from "../../../DAL/api";
+import {GetProfileUsersType, ProfileContactsType} from "../../../DAL/apiSenior";
 import {Input, Checkbox, SubmitButton, Form, ResetButton} from 'formik-antd'
 import {putProfileInfoThunk} from "../../../redux/profile_reduser";
 

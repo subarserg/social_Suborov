@@ -5,9 +5,10 @@ import {
   putStatusUser,
   putUploadAvatar, ResultCodeEnum,
   UserPhotoType, WeatherCodeEnum, WeatherType
-} from "../DAL/api";
+} from "../DAL/apiSenior";
 import {BaseThunkType, InferActionType} from "./store";
 import { BeforeUploadFileType, RcFile} from 'rc-upload/es/interface';
+import edamamAPI, {FoodParserType} from "../DAL/EdamamAPI";
 
 const defaultState = {
   postData: [
@@ -19,7 +20,9 @@ const defaultState = {
   profile: null as null | GetProfileUsersType,
   status: ``,
   weatherWiget: null as null | WeatherType,
-  rates: null as null | GetRatesType
+  rates: null as null | GetRatesType,
+  dataSearchFood: null as null | Array<string>,
+  dataFoodParser: null as null | FoodParserType
 };
 
 
@@ -66,6 +69,18 @@ const profileReduser = (state = defaultState, action : ActionTypes) : DefaultSta
         rates : action.rates,
       }
     }
+    case `profile/Sergey_Suborov/SET_FOOD_SEARCH_AUTOCOMPLETE`: {
+      return {
+        ...state,
+        dataSearchFood : action.dataSearchFood,
+      }
+    }
+    case "profile/Sergey_Suborov/SET_FOOD_PARSER" : {
+      return {
+        ...state,
+        dataFoodParser : action.dataFoodParser
+      }
+    }
     case `profile/Sergey_Suborov/UPLOAD_AVATAR`: {
       return {
         ...state,
@@ -88,6 +103,8 @@ export const actions = {
   putUploadAvatarSuccess: ( avatar : UserPhotoType ) => ({type: `profile/Sergey_Suborov/UPLOAD_AVATAR`, avatar} as const),
   setWeatherTempSuccess: ( weatherWiget : WeatherType ) => ({type: `profile/Sergey_Suborov/SET_WEATHER_WIGET`, weatherWiget} as const),
   setRatesSuccess: ( rates : GetRatesType ) => ({type: `profile/Sergey_Suborov/SET_RATES`, rates} as const),
+  setFoodSearchAutocompleteSuccess: ( dataSearchFood : Array<string> ) => ({type: `profile/Sergey_Suborov/SET_FOOD_SEARCH_AUTOCOMPLETE`, dataSearchFood} as const),
+  setFoodParserSuccess: ( dataFoodParser : FoodParserType ) => ({type: `profile/Sergey_Suborov/SET_FOOD_PARSER`, dataFoodParser} as const),
 }
 
 
@@ -99,6 +116,25 @@ export const getRatesThunk = () : ThunkTypes => async (dispatch) => {
     console.log(e)
   }
 }
+
+export const getFoodSearchAutocompleteThunk = (textFood : string) : ThunkTypes => async (dispatch) => {
+  try {
+    let data = await edamamAPI.getFoodSearchAutocomplete(textFood)
+    dispatch(actions.setFoodSearchAutocompleteSuccess(data))
+  }catch (e) {
+    console.log(e)
+  }
+}
+
+export const getFoodParserThunk = (text: string) : ThunkTypes => async (dispatch) => {
+  try {
+    let data = await edamamAPI.getFoodParser(text)
+    dispatch(actions.setFoodParserSuccess(data))
+  }catch (e) {
+    console.log(e)
+  }
+}
+
 
 
 

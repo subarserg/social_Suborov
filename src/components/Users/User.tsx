@@ -6,7 +6,7 @@ import {
 } from "../../redux/users_reduser";
 import imgAva from "./../../assets/images/images.png";
 import style from "./Users.module.css";
-import {UserType} from "../../DAL/api";
+import {UserType} from "../../DAL/apiSenior";
 import {FC, useState} from "react";
 
 const User : FC<PropsType> = ({user}) => {

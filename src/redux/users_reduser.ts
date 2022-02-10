@@ -1,4 +1,4 @@
-import {deleteFollowUser, FilterType, getUsers, postFollowUser, UserType} from "../DAL/api";
+import {deleteFollowUser, FilterType, getUsers, postFollowUser, UserType} from "../DAL/apiSenior";
 import {BaseThunkType, InferActionType} from "./store";
 
 const defaultState = {

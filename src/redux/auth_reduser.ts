@@ -1,4 +1,4 @@
-import {deleteLogin, getAuthUser, getCaptchaUrl, postIsLogin, ResultCodeCaptchaEnum, ResultCodeEnum} from "../DAL/api";
+import {deleteLogin, getAuthUser, getCaptchaUrl, postIsLogin, ResultCodeCaptchaEnum, ResultCodeEnum} from "../DAL/apiSenior";
 import {BaseThunkType, InferActionType} from "./store";
 import {FormType} from "../components/Login/LoginForm";
 

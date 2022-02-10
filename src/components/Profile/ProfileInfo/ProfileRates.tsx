@@ -3,7 +3,7 @@ import {useDispatch, useSelector} from "react-redux";
 import {getRatesThunk} from "../../../redux/profile_reduser";
 import {Col, Row} from "antd";
 import {getRatesSelector} from "../../../redux/Selectors/profile_selector";
-import {RatesType} from "../../../DAL/api";
+import {RatesType} from "../../../DAL/apiSenior";
 
 
 
